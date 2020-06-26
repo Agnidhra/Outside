@@ -26,6 +26,7 @@
 		616433D1249DE0E100171D67 /* CityDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616433D0249DE0E100171D67 /* CityDetailsVC.swift */; };
 		616433F3249E01E600171D67 /* getWeatherOfThePlaceResponseDetailed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616433F2249E01E600171D67 /* getWeatherOfThePlaceResponseDetailed.swift */; };
 		61865C20249DB39F00EB339B /* CityShortDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61865C1F249DB39F00EB339B /* CityShortDetailsCell.swift */; };
+		61DEA1EE24A5BABD00486F83 /* MapSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DEA1ED24A5BABD00486F83 /* MapSelectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		616433D0249DE0E100171D67 /* CityDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityDetailsVC.swift; sourceTree = "<group>"; };
 		616433F2249E01E600171D67 /* getWeatherOfThePlaceResponseDetailed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getWeatherOfThePlaceResponseDetailed.swift; sourceTree = "<group>"; };
 		61865C1F249DB39F00EB339B /* CityShortDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityShortDetailsCell.swift; sourceTree = "<group>"; };
+		61DEA1ED24A5BABD00486F83 /* MapSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSelectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 		61000C41249B0F7300C64711 /* Outside */ = {
 			isa = PBXGroup;
 			children = (
+				61DEA1EC24A5BABD00486F83 /* MapSelectionViewContoller */,
 				616433CF249DE0C000171D67 /* CityDetailsVC */,
 				61865C1E249DB35B00EB339B /* HomeVC */,
 				61000C5C249C68C900C64711 /* API */,
@@ -128,6 +131,14 @@
 				615B757E24A1469800B6929D /* UnitAndAddFooterTableViewCell.swift */,
 			);
 			path = HomeVC;
+			sourceTree = "<group>";
+		};
+		61DEA1EC24A5BABD00486F83 /* MapSelectionViewContoller */ = {
+			isa = PBXGroup;
+			children = (
+				61DEA1ED24A5BABD00486F83 /* MapSelectionViewController.swift */,
+			);
+			path = MapSelectionViewContoller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -217,6 +228,7 @@
 				616433D1249DE0E100171D67 /* CityDetailsVC.swift in Sources */,
 				557C351F249F811500269E03 /* CityDetailsVCExtensionForDailyWeatherTableView.swift in Sources */,
 				61000C60249C696200C64711 /* BaseAPI.swift in Sources */,
+				61DEA1EE24A5BABD00486F83 /* MapSelectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
