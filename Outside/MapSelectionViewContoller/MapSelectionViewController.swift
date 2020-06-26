@@ -9,14 +9,15 @@
 import UIKit
 import MapKit
 
-class MapSelectionViewController: UIViewController {
+class MapSelectionViewController: UIViewController, MKMapViewDelegate {
     
-    var weatherData: [WeatherData?] = []
+    var weatherDataCollection: [WeatherData?] = []
     @IBOutlet weak var mapView: MKMapView!
+    var pinMarking: MKPointAnnotation? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        displayPins(weatherData)
+        displayPins(weatherDataCollection)
         // Do any additional setup after loading the view.
     }
     
@@ -41,5 +42,64 @@ class MapSelectionViewController: UIViewController {
         }
         mapView.showAnnotations(mapView.annotations, animated: true)
     }
+    
+    @IBAction func selectPinByLongPress(_ sender: UILongPressGestureRecognizer) {
+            let location = sender.location(in: mapView)
+            let locCoord = mapView.convert(location, toCoordinateFrom: mapView)
+            
+            if sender.state == .began {
+                pinMarking = MKPointAnnotation()
+                pinMarking!.coordinate = locCoord
+                mapView.addAnnotation(pinMarking!)
+            } else if sender.state == .changed {
+                pinMarking!.coordinate = locCoord
+            } else if sender.state == .ended {
+                BaseAPI.sharedInstance().getWeatherData(latitude: (pinMarking!.coordinate.latitude),
+                                                        longitude: (pinMarking!.coordinate.longitude)) { (weatherData, error) in
+                    if let weatherData = weatherData {
+                        print(weatherData.timezone)
+                        self.weatherDataCollection.append(weatherData)
+//                        DispatchQueue.main.async {
+//                            self.displayPins(self.weatherData)
+//                        }
+
+                    } else {
+                        print(error.debugDescription)
+                    }
+                }
+    //            _ = PinDetails(
+    //                latCoordinate: String(pinMarking!.coordinate.latitude),
+    //                longCoordinate: String(pinMarking!.coordinate.longitude),
+    //                context: CoreDataStackDetails.getSharedInstance().currentMOContext
+    //        )
+    //            saveCurrentContext()
+            }
+        }
+        
+        
+        //MARK:- MapView Delegate Methods
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            
+            let reuseId = "pin"
+            
+            var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+            
+            if pinView == nil {
+                pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+                pinView!.canShowCallout = false
+                pinView!.pinTintColor = .red
+                pinView!.animatesDrop = true
+            } else {
+                pinView!.annotation = annotation
+            }
+            
+            return pinView
+        }
+        
+        func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+            if control == view.rightCalloutAccessoryView {
+                self.showAlert(message: "Invalid Link.")
+            }
+        }
 
 }

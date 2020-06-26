@@ -166,9 +166,13 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uKf-Bz-4JK">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="Z7n-GU-he7" appends="YES" id="hSU-aq-WAt"/>
+                                </connections>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="VPX-dM-Ott" firstAttribute="trailing" secondItem="uKf-Bz-4JK" secondAttribute="trailing" id="Rkp-Ho-3Tn"/>
                             <constraint firstAttribute="bottom" secondItem="uKf-Bz-4JK" secondAttribute="bottom" id="UQf-av-PZN"/>
@@ -182,6 +186,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YEW-0n-BIx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="Z7n-GU-he7">
+                    <connections>
+                        <action selector="selectPinByLongPress:" destination="Tdn-oI-wNM" id="VW7-Si-Zoc"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="157" y="957"/>
         </scene>

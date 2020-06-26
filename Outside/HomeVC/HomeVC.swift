@@ -142,7 +142,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
         } else {
            vc = storyboard?.instantiateViewController(withIdentifier: "MapSelectionViewController") as! MapSelectionViewController
         }
-        vc.weatherData = self.weatherData
+        vc.weatherDataCollection = self.weatherData
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
         
