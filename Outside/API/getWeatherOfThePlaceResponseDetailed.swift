@@ -1,12 +1,13 @@
 //
-//  getWeatherOfThePlaceResponse.swift
+//  getWeatherOfThePlaceResponseDetailed.swift
 //  Outside
 //
-//  Created by Agnidhra Gangopadhyay on 6/20/20.
+//  Created by Agnidhra Gangopadhyay on 6/25/20.
 //  Copyright © 2020 Agnidhra Gangopadhyay. All rights reserved.
 //
 
 import Foundation
+
 // MARK: - Welcome
 struct WeatherDataDetailed: Codable {
     let lat, lon: Double
@@ -25,8 +26,8 @@ struct WeatherDataDetailed: Codable {
 
 // MARK: - Current
 struct Current: Codable {
-    let dt, sunrise, sunset: Int
-    let temp, feelsLike: Double
+    let dt, sunrise, sunset, temp: Int
+    let feelsLike: Double
     let pressure, humidity: Int
     let dewPoint, uvi: Double
     let clouds, visibility: Int?
@@ -51,7 +52,7 @@ struct Weather_Detailed: Codable {
     let id: Int
     let main: Main_Detailed
     let weatherDescription: Description
-    let icon: String
+    let icon: Icon
 
     enum CodingKeys: String, CodingKey {
         case id, main
@@ -60,8 +61,16 @@ struct Weather_Detailed: Codable {
     }
 }
 
+enum Icon: String, Codable {
+    case the03D = "03d"
+    case the04D = "04d"
+    case the04N = "04n"
+    case the10D = "10d"
+    case the10N = "10n"
+    case the50D = "50d"
+}
+
 enum Main_Detailed: String, Codable {
-    case clear = "Clear"
     case clouds = "Clouds"
     case haze = "Haze"
     case rain = "Rain"
@@ -69,10 +78,10 @@ enum Main_Detailed: String, Codable {
 
 enum Description: String, Codable {
     case brokenClouds = "broken clouds"
-    case clearSky = "clear sky"
-    case fewClouds = "few clouds"
     case haze = "haze"
+    case heavyIntensityRain = "heavy intensity rain"
     case lightRain = "light rain"
+    case moderateRain = "moderate rain"
     case overcastClouds = "overcast clouds"
     case scatteredClouds = "scattered clouds"
 }
@@ -85,7 +94,7 @@ struct Daily: Codable {
     let pressure, humidity: Int
     let dewPoint, windSpeed: Double
     let windDeg: Int
-    let weather: [Weather_Detailed]
+    let weather: [Weather]
     let clouds: Int
     let rain: Double?
     let uvi: Double
@@ -121,7 +130,7 @@ struct Hourly: Codable {
     let clouds: Int
     let windSpeed: Double
     let windDeg: Int
-    let weather: [Weather_Detailed]
+    let weather: [Weather]
     let rain: Rain?
 
     enum CodingKeys: String, CodingKey {

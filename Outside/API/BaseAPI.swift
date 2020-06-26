@@ -56,8 +56,7 @@ class BaseAPI {
             do {
                 let pr = try JSONDecoder().decode(WeatherDataDetailed.self, from: data)
                 completion(pr, nil)
-            } catch { completion(nil, error) }
-            
+            } catch { completion(nil, error)}
         }
     }
 }

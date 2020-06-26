@@ -108,4 +108,9 @@ class CityDetailsVC: UIViewController {
     @IBAction func dismissCityDetailsPage(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        //Code to be written to hide section on scrolling
+        //print(scrollView.contentOffset)
+    }
 }

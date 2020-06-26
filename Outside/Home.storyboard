@@ -65,6 +65,9 @@
                                                     <state key="normal">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="addCity:" destination="lOf-hI-cbA" eventType="touchUpInside" id="ceq-G6-kZq"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -156,12 +159,12 @@
         <!--MapSelectionView-->
         <scene sceneID="VV3-WT-ioy">
             <objects>
-                <viewController id="Tdn-oI-wNM" userLabel="MapSelectionView" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MapSelectionViewController" id="Tdn-oI-wNM" userLabel="MapSelectionView" customClass="MapSelectionViewController" customModule="Outside" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WiS-9u-2ag">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="uKf-Bz-4JK">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uKf-Bz-4JK">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </mapView>
                         </subviews>
@@ -174,6 +177,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="VPX-dM-Ott"/>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="uKf-Bz-4JK" id="fKx-8K-VJf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YEW-0n-BIx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

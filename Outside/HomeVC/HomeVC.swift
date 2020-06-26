@@ -26,6 +26,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
 
         // For use in foreground
         self.locationManager.requestWhenInUseAuthorization()
+        
 
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
@@ -132,5 +133,21 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
             self.present(vc, animated: true, completion: nil)
         }
     }
+    
+    
+    @IBAction func addCity(_ sender: Any) {
+        let vc:MapSelectionViewController
+        if #available(iOS 13.0, *) {
+            vc = storyboard?.instantiateViewController(identifier: "MapSelectionViewController") as! MapSelectionViewController
+        } else {
+           vc = storyboard?.instantiateViewController(withIdentifier: "MapSelectionViewController") as! MapSelectionViewController
+        }
+        vc.weatherData = self.weatherData
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+        
+    }
+    
+    
 }
 
