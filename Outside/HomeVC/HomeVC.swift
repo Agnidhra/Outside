@@ -21,11 +21,16 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
         super.viewDidLoad()
         print(getTime(timeZone: 1592657648))
         // Do any additional setup after loading the view.
-        // Ask for Authorisation from the User.
-        self.locationManager.requestAlwaysAuthorization()
+        
+        if !CLLocationManager.locationServicesEnabled() && !isCoordinateUpdated {
+            // Ask for Authorisation from the User.
+            self.locationManager.requestAlwaysAuthorization()
 
-        // For use in foreground
-        self.locationManager.requestWhenInUseAuthorization()
+            // For use in foreground
+            self.locationManager.requestWhenInUseAuthorization()
+            
+        }
+            
         
 
         if CLLocationManager.locationServicesEnabled() {
@@ -94,15 +99,20 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return weatherData.count
+        if(section == 0) {
+            return weatherData.count
+        } else {
+            return 1
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if(indexPath.section == 0) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CityShortDetails", for: indexPath) as! CityShortDetailsCell
-            cell.timeLabel?.text =  String(self.getTime(timeZone: weatherData[0]?.timezone ?? nil).prefix(5))
-            cell.cityLabel?.text = weatherData[0]?.name
-            cell.temperatureLabel?.text = "\(String(describing: weatherData[0]!.main.temp) )\u{00B0}"
+            cell.timeLabel?.text =  String(self.getTime(timeZone: weatherData[indexPath.row]?.timezone ?? nil).prefix(5))
+            cell.cityLabel?.text = weatherData[indexPath.row]?.name
+            cell.temperatureLabel?.text = "\(String(describing: weatherData[indexPath.row]!.main.temp) )\u{00B0}"
             
             return cell
         } else {
@@ -145,7 +155,6 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
         vc.weatherDataCollection = self.weatherData
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
-        
     }
     
     

@@ -12,7 +12,7 @@
         <!--HomeVC-->
         <scene sceneID="XE3-5N-vXu">
             <objects>
-                <viewController id="lOf-hI-cbA" customClass="HomeVC" customModule="Outside" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeVC" id="lOf-hI-cbA" customClass="HomeVC" customModule="Outside" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="X64-Vn-lWx">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -170,12 +170,27 @@
                                     <outletCollection property="gestureRecognizers" destination="Z7n-GU-he7" appends="YES" id="hSU-aq-WAt"/>
                                 </connections>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L9l-mX-s3q">
+                                <rect key="frame" x="320" y="44" width="70" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="dfb-AL-Jxp"/>
+                                    <constraint firstAttribute="height" constant="30" id="kbW-3T-Xs6"/>
+                                </constraints>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectedDone:" destination="Tdn-oI-wNM" eventType="touchUpInside" id="2WE-nQ-nuQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="VPX-dM-Ott" firstAttribute="trailing" secondItem="L9l-mX-s3q" secondAttribute="trailing" constant="24" id="3IZ-l7-cLa"/>
                             <constraint firstItem="VPX-dM-Ott" firstAttribute="trailing" secondItem="uKf-Bz-4JK" secondAttribute="trailing" id="Rkp-Ho-3Tn"/>
                             <constraint firstAttribute="bottom" secondItem="uKf-Bz-4JK" secondAttribute="bottom" id="UQf-av-PZN"/>
+                            <constraint firstItem="L9l-mX-s3q" firstAttribute="top" secondItem="VPX-dM-Ott" secondAttribute="top" id="Vag-bR-Te0"/>
                             <constraint firstItem="uKf-Bz-4JK" firstAttribute="leading" secondItem="VPX-dM-Ott" secondAttribute="leading" id="ZLS-tV-MbA"/>
                             <constraint firstItem="uKf-Bz-4JK" firstAttribute="top" secondItem="WiS-9u-2ag" secondAttribute="top" id="fcz-Kz-ruZ"/>
                         </constraints>

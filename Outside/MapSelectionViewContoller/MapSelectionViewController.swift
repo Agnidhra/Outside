@@ -102,4 +102,16 @@ class MapSelectionViewController: UIViewController, MKMapViewDelegate {
             }
         }
 
+    @IBAction func selectedDone(_ sender: Any) {
+        let vc:HomeVC
+        if #available(iOS 13.0, *) {
+            vc = storyboard?.instantiateViewController(identifier: "HomeVC") as! HomeVC
+        } else {
+           vc = storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! HomeVC
+        }
+        vc.weatherData = self.weatherDataCollection
+        vc.isCoordinateUpdated = true
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
 }
