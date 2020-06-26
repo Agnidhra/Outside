@@ -35,9 +35,10 @@ class MapSelectionViewController: UIViewController, MKMapViewDelegate {
     func displayPins(_ pinsDetails: [WeatherData?]) {
         for eachPin in pinsDetails {
             let pin = MKPointAnnotation()
-            let latitude = eachPin!.coord.lat
-            let longitude = eachPin!.coord.lon
-            pin.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+            let latitude = eachPin!.coord!.lat
+            let longitude = eachPin!.coord!.lon
+            pin.coordinate = CLLocationCoordinate2DMake(latitude!, longitude!)
+            pin.title = eachPin?.name
             mapView.addAnnotation(pin)
         }
         mapView.showAnnotations(mapView.annotations, animated: true)
@@ -57,7 +58,7 @@ class MapSelectionViewController: UIViewController, MKMapViewDelegate {
                 BaseAPI.sharedInstance().getWeatherData(latitude: (pinMarking!.coordinate.latitude),
                                                         longitude: (pinMarking!.coordinate.longitude)) { (weatherData, error) in
                     if let weatherData = weatherData {
-                        print(weatherData.timezone)
+                        print(weatherData.timezone as Any)
                         self.weatherDataCollection.append(weatherData)
 //                        DispatchQueue.main.async {
 //                            self.displayPins(self.weatherData)
@@ -65,6 +66,8 @@ class MapSelectionViewController: UIViewController, MKMapViewDelegate {
 
                     } else {
                         print(error.debugDescription)
+                        self.showAlert(message: "No Information Found")
+                        
                     }
                 }
     //            _ = PinDetails(

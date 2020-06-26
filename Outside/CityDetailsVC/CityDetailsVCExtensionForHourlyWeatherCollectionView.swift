@@ -23,12 +23,12 @@ extension CityDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             let hourly: Hourly = (weatherDataDetailedCollection[0]?.hourly[indexPath.row])!
             DispatchQueue.main.async {
                 cell.sizeToFit()
-                cell.hourlyTime.text = String(self.getTimeOfForecast(timeZone: self.weatherDataDetailedCollection[0]?.timezoneOffset, time: hourly.dt).prefix(2))
-                cell.weatherIcon.image = UIImage(named: hourly.weather[0].icon)
+                cell.hourlyTime.text = String(self.getTimeOfForecast(timeZone: self.weatherDataDetailedCollection[0]?.timezoneOffset, time: hourly.dt!).prefix(2))
+                cell.weatherIcon.image = UIImage(named: hourly.weather[0]!.icon!)
                 cell.weatherIcon.isHidden = false
                 cell.weatherIcon.isHighlighted = false
                 cell.weatherIcon.reloadInputViews()
-                cell.hourlyTemperature.text = "\(String("\(hourly.temp)".prefix(2)))\u{00B0}"
+                cell.hourlyTemperature.text = "\(String("\(hourly.temp!)".prefix(2)))\u{00B0}"
             }
         }
         return cell

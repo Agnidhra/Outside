@@ -36,11 +36,11 @@ class CityDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         cityName.text = weatherData?.name
-        weather.text = weatherData?.weather[0].main
-        currentTemperature.text = "\(String(describing: weatherData!.main.temp).prefix(2))\u{00B0}"
+        weather.text = weatherData?.weather[0]?.main
+        currentTemperature.text = "\(String(describing: weatherData!.main!.temp!).prefix(2))\u{00B0}"
         
-        BaseAPI.sharedInstance().getDetailedWeatherData(latitude: (weatherData?.coord.lat)!,
-                longitude: (weatherData?.coord.lon)!) { (weatherDetailedData, error) in
+        BaseAPI.sharedInstance().getDetailedWeatherData(latitude: (weatherData?.coord?.lat)!,
+                                                        longitude: (weatherData?.coord?.lon)!) { (weatherDetailedData, error) in
             if let weatherDetailedData = weatherDetailedData {
                 self.weatherDataDetailedCollection.append(weatherDetailedData)
                 DispatchQueue.main.async {
@@ -52,9 +52,9 @@ class CityDetailsVC: UIViewController {
                 print(error.debugDescription)
             }
         }
-        day.text = "\(DateFormatter().standaloneWeekdaySymbols![NSCalendar.current.component(.weekday, from: NSDate(timeIntervalSince1970: Double(weatherData!.dt)) as Date)-1]) today"
-        maximumTemperature.text = "\(weatherData!.main.tempMax)\u{00B0}"
-        minimumTemperature.text = "\(weatherData!.main.tempMin)\u{00B0}"
+        day.text = "\(DateFormatter().standaloneWeekdaySymbols![NSCalendar.current.component(.weekday, from: NSDate(timeIntervalSince1970: Double(weatherData!.dt!)) as Date)-1]) today"
+        maximumTemperature.text = "\(String(describing: weatherData!.main!.tempMax!))\u{00B0}"
+        minimumTemperature.text = "\(String(describing: weatherData!.main!.tempMin!))\u{00B0}"
         
         //let screenSize: CGRect = UIScreen.main.bounds
         //scrollDataView.contentSize = CGSize(width: self.view.frame.width, height: screenSize.height)
@@ -87,20 +87,20 @@ class CityDetailsVC: UIViewController {
     
     func updateCurrentOtherWeatherInformation(weatherDataDetailedCollection: WeatherDataDetailed) {
         self.currentOtherWeatherInformation.append([["SUNRISE": String(getTimeOfForecast(timeZone: weatherDataDetailedCollection.timezoneOffset
-            , time: weatherDataDetailedCollection.current.sunrise).prefix(5))],
-                                                    ["SUNSET":String(getTimeOfForecast(timeZone: weatherDataDetailedCollection.timezoneOffset, time: weatherDataDetailedCollection.current.sunset).prefix(5))]])
+            , time: Int(weatherDataDetailedCollection.current!.sunrise!)).prefix(5))],
+                                                    ["SUNSET":String(getTimeOfForecast(timeZone: weatherDataDetailedCollection.timezoneOffset, time: Int(weatherDataDetailedCollection.current!.sunset!)).prefix(5))]])
         
-        self.currentOtherWeatherInformation.append([["FEELS LIKE":"\(String("\(weatherDataDetailedCollection.current.feelsLike)".prefix(2)))\u{00B0}"],
-                                                ["PRESSURE":"\(round(Double(weatherDataDetailedCollection.current.pressure) * 0.02953)) inHg"]])
+        self.currentOtherWeatherInformation.append([["FEELS LIKE":"\(String("\(weatherDataDetailedCollection.current!.feelsLike!)".prefix(2)))\u{00B0}"],
+                                                ["PRESSURE":"\(round(Double(weatherDataDetailedCollection.current!.pressure!) * 0.02953)) inHg"]])
         
     
-        self.currentOtherWeatherInformation.append([["HUMIDITY":"\(weatherDataDetailedCollection.current.humidity)%"],
-                                                ["VISIBILITY":"\(String(describing: round(Double(weatherDataDetailedCollection.current.visibility!) * 0.000621371))) mi"]])
+        self.currentOtherWeatherInformation.append([["HUMIDITY":"\(weatherDataDetailedCollection.current!.humidity!)%"],
+                                                ["VISIBILITY":"\(String(describing: round(Double(weatherDataDetailedCollection.current!.visibility!) * 0.000621371))) mi"]])
         
-        self.currentOtherWeatherInformation.append([["WIND SPEED":"\(weatherDataDetailedCollection.current.windSpeed) mph"],
-                                                ["CHANCES OF RAIN":"\(String(describing: weatherDataDetailedCollection.current.clouds!))%"]])
-        self.currentOtherWeatherInformation.append([["UV INDEX":"\(String(describing: weatherDataDetailedCollection.current.uvi))"],
-                                                ["DEW POINT":"\(String(describing: weatherDataDetailedCollection.current.dewPoint))\u{00B0}"]])
+        self.currentOtherWeatherInformation.append([["WIND SPEED":"\(weatherDataDetailedCollection.current!.windSpeed!) mph"],
+                                                ["CHANCES OF RAIN":"\(String(describing: weatherDataDetailedCollection.current!.clouds!))%"]])
+        self.currentOtherWeatherInformation.append([["UV INDEX":"\(String(describing: weatherDataDetailedCollection.current!.uvi!))"],
+                                                ["DEW POINT":"\(String(describing: weatherDataDetailedCollection.current!.dewPoint!))\u{00B0}"]])
         
     }
     

@@ -30,10 +30,10 @@ extension CityDetailsVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if(indexPath.section == 0) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "WeekDayDetails", for: indexPath) as! DailyWeatherDataTableViewCell
-            cell.dayName.text = "\(DateFormatter().standaloneWeekdaySymbols![NSCalendar.current.component(.weekday, from: NSDate(timeIntervalSince1970: Double(weatherDataDetailedCollection[0]!.daily[indexPath.row].dt)) as Date)-1])"
-            cell.dayiCon.image = UIImage(named: weatherDataDetailedCollection[0]!.daily[indexPath.row].weather[0].icon)
-            cell.dayMaxTemp.text = String("\(weatherDataDetailedCollection[0]!.daily[indexPath.row].temp.max)".prefix(2))
-            cell.dayMinTemp.text = String("\(weatherDataDetailedCollection[0]!.daily[indexPath.row].temp.min)".prefix(2))
+            cell.dayName.text = "\(DateFormatter().standaloneWeekdaySymbols![NSCalendar.current.component(.weekday, from: NSDate(timeIntervalSince1970: Double(weatherDataDetailedCollection[0]!.daily[indexPath.row]!.dt!)) as Date)-1])"
+            cell.dayiCon.image = UIImage(named: weatherDataDetailedCollection[0]!.daily[indexPath.row]!.weather[0]!.icon!)
+            cell.dayMaxTemp.text = String("\(weatherDataDetailedCollection[0]!.daily[indexPath.row]!.temp!.max!)".prefix(2))
+            cell.dayMinTemp.text = String("\(weatherDataDetailedCollection[0]!.daily[indexPath.row]!.temp!.min!)".prefix(2))
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CurrentOtherWeatherInformation", for: indexPath) as! CurrentOtherWeatherInformationTableViewCell

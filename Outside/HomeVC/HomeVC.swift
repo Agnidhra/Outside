@@ -45,7 +45,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
                 BaseAPI.sharedInstance().getWeatherData(latitude: (locationManager.location?.coordinate.latitude)!,
                         longitude: (locationManager.location?.coordinate.longitude)!) { (weatherData, error) in
                     if let weatherData = weatherData {
-                        print(weatherData.timezone)
+                        print(weatherData.timezone as Any)
                         self.weatherData.append(weatherData)
                         DispatchQueue.main.async {
                             self.cities.reloadData()
@@ -69,7 +69,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
                 BaseAPI.sharedInstance().getWeatherData(latitude: (locationManager.location?.coordinate.latitude)!,
                         longitude: (locationManager.location?.coordinate.longitude)!) { (weatherData, error) in
                     if let weatherData = weatherData {
-                        print(weatherData.timezone)
+                        print(weatherData.timezone as Any)
                         self.weatherData.append(weatherData)
                         DispatchQueue.main.async {
                             self.cities.reloadData()
@@ -112,7 +112,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
             let cell = tableView.dequeueReusableCell(withIdentifier: "CityShortDetails", for: indexPath) as! CityShortDetailsCell
             cell.timeLabel?.text =  String(self.getTime(timeZone: weatherData[indexPath.row]?.timezone ?? nil).prefix(5))
             cell.cityLabel?.text = weatherData[indexPath.row]?.name
-            cell.temperatureLabel?.text = "\(String(describing: weatherData[indexPath.row]!.main.temp) )\u{00B0}"
+            cell.temperatureLabel?.text = "\(String(describing: weatherData[indexPath.row]!.main!.temp!) )\u{00B0}"
             
             return cell
         } else {
@@ -141,6 +141,14 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
             vc.weatherData = weatherData[indexPath.row]
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            //numbers.remove(at: indexPath.row)
+            weatherData.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
         }
     }
     
