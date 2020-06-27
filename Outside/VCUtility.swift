@@ -24,4 +24,30 @@ extension UIViewController {
             updateTheUI()
         }
     }
+    func getImage(weather: String?) -> UIImage? {
+        switch weather {
+            case "Clear":
+                return UIImage(named: "ClearDay")
+            case "Clouds":
+                return UIImage(named: "Clouds")
+            case "Drizzle":
+                return UIImage(named: "Drizzle")
+            case "Haze":
+                return UIImage(named: "Haze")
+            case "Mist":
+                return UIImage(named: "Mist")
+            case "Rain":
+                return UIImage(named: "Rain")
+            case "Smoke":
+                return UIImage(named: "Smoke")
+            case "Snow":
+                return UIImage(named: "Snow")
+            case "Thunderstorm":
+                return UIImage(named: "Thunderstorm")
+            default:
+                print("Weather not Predefined" )
+            return nil
+        }
+    }
+    
 }

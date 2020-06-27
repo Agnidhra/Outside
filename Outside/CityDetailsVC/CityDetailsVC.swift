@@ -39,32 +39,9 @@ class CityDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
-        switch weatherData[cityRow!]?.weather[0]?.main {
-            case "Clear":
-                customBackground.image = UIImage(named: "ClearDay")
-            case "Clouds":
-                customBackground.image = UIImage(named: "Clouds")
-            case "Drizzle":
-                customBackground.image = UIImage(named: "Drizzle")
-            case "Haze":
-                customBackground.image = UIImage(named: "Haze")
-            case "Mist":
-                customBackground.image = UIImage(named: "Mist")
-            case "Rain":
-                customBackground.image = UIImage(named: "Rain")
-            case "Smoke":
-                customBackground.image = UIImage(named: "Smoke")
-            case "Snow":
-                customBackground.image = UIImage(named: "Snow")
-            case "Thunderstorm":
-                customBackground.image = UIImage(named: "Thunderstorm")
-            default:
-                print("Weather not Predefined" )
+        if let backgroundImage = getImage(weather: weatherData[cityRow!]?.weather[0]?.main) {
+            customBackground.image = backgroundImage
         }
-        
-        
         
         cityName.text = weatherData[cityRow!]?.name
         weather.text = weatherData[cityRow!]?.weather[0]?.main

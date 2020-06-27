@@ -114,28 +114,9 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
             cell.cityLabel?.text = weatherData[indexPath.row]?.name
             cell.temperatureLabel?.text = "\(String(describing: weatherData[indexPath.row]!.main!.temp!).prefix(2))\u{00B0}"
             
-            switch weatherData[indexPath.row]?.weather[0]?.main {
-                case "Clear":
-                    cell.customeBackground?.image = UIImage(named: "ClearDay")
-                case "Clouds":
-                    cell.customeBackground?.image = UIImage(named: "Clouds")
-                case "Drizzle":
-                    cell.customeBackground?.image = UIImage(named: "Drizzle")
-                case "Haze":
-                    cell.customeBackground?.image = UIImage(named: "Haze")
-                case "Mist":
-                    cell.customeBackground?.image = UIImage(named: "Mist")
-                case "Rain":
-                    cell.customeBackground?.image = UIImage(named: "Rain")
-                case "Smoke":
-                    cell.customeBackground?.image = UIImage(named: "Smoke")
-                case "Snow":
-                    cell.customeBackground?.image = UIImage(named: "Snow")
-                case "Thunderstorm":
-                    cell.customeBackground?.image = UIImage(named: "Thunderstorm")
-                default:
-                    print("Weather not Predefined" )
-            }
+            if let backgroundImage = getImage(weather: weatherData[indexPath.row]?.weather[0]?.main) {
+                       cell.customeBackground?.image = backgroundImage
+                   }
             
             return cell
         } else {
