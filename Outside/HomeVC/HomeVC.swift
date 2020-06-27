@@ -112,7 +112,30 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
             let cell = tableView.dequeueReusableCell(withIdentifier: "CityShortDetails", for: indexPath) as! CityShortDetailsCell
             cell.timeLabel?.text =  String(self.getTime(timeZone: weatherData[indexPath.row]?.timezone ?? nil).prefix(5))
             cell.cityLabel?.text = weatherData[indexPath.row]?.name
-            cell.temperatureLabel?.text = "\(String(describing: weatherData[indexPath.row]!.main!.temp!) )\u{00B0}"
+            cell.temperatureLabel?.text = "\(String(describing: weatherData[indexPath.row]!.main!.temp!).prefix(2))\u{00B0}"
+            
+            switch weatherData[indexPath.row]?.weather[0]?.main {
+                case "Clear":
+                    cell.customeBackground?.image = UIImage(named: "ClearDay")
+                case "Clouds":
+                    cell.customeBackground?.image = UIImage(named: "Clouds")
+                case "Drizzle":
+                    cell.customeBackground?.image = UIImage(named: "Drizzle")
+                case "Haze":
+                    cell.customeBackground?.image = UIImage(named: "Haze")
+                case "Mist":
+                    cell.customeBackground?.image = UIImage(named: "Mist")
+                case "Rain":
+                    cell.customeBackground?.image = UIImage(named: "Rain")
+                case "Smoke":
+                    cell.customeBackground?.image = UIImage(named: "Smoke")
+                case "Snow":
+                    cell.customeBackground?.image = UIImage(named: "Snow")
+                case "Thunderstorm":
+                    cell.customeBackground?.image = UIImage(named: "Thunderstorm")
+                default:
+                    print("Weather not Predefined" )
+            }
             
             return cell
         } else {
@@ -145,10 +168,19 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCell.EditingStyle.delete {
+        
+        if editingStyle == UITableViewCell.EditingStyle.delete && indexPath.row != 0 {
             //numbers.remove(at: indexPath.row)
             weatherData.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        if(indexPath.row == 0 ){
+            return UITableViewCell.EditingStyle.none
+        } else {
+            return UITableViewCell.EditingStyle.delete
         }
     }
     

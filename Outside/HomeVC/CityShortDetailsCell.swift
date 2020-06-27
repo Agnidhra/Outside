@@ -13,7 +13,7 @@ class CityShortDetailsCell: UITableViewCell {
     @IBOutlet weak var timeLabel:UILabel?
     @IBOutlet weak var cityLabel:UILabel?
     @IBOutlet weak var temperatureLabel:UILabel?
-    
+    @IBOutlet weak var customeBackground:UIImageView?
     
 
     override func awakeFromNib() {

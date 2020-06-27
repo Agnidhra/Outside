@@ -13,6 +13,7 @@ class CityDetailsVC: UIViewController {
     var weatherData: WeatherData?
     var weatherDataDetailedCollection: [WeatherDataDetailed?] = []
     var currentOtherWeatherInformation:[[[String:String]]] = [] //= [[[:]]]
+    @IBOutlet weak var customBackground: UIImageView!
     
     //City Name And Weather Outlet
     @IBOutlet weak var cityName: UILabel!
@@ -35,6 +36,34 @@ class CityDetailsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        switch weatherData?.weather[0]?.main {
+            case "Clear":
+                customBackground.image = UIImage(named: "ClearDay")
+            case "Clouds":
+                customBackground.image = UIImage(named: "Clouds")
+            case "Drizzle":
+                customBackground.image = UIImage(named: "Drizzle")
+            case "Haze":
+                customBackground.image = UIImage(named: "Haze")
+            case "Mist":
+                customBackground.image = UIImage(named: "Mist")
+            case "Rain":
+                customBackground.image = UIImage(named: "Rain")
+            case "Smoke":
+                customBackground.image = UIImage(named: "Smoke")
+            case "Snow":
+                customBackground.image = UIImage(named: "Snow")
+            case "Thunderstorm":
+                customBackground.image = UIImage(named: "Thunderstorm")
+            default:
+                print("Weather not Predefined" )
+        }
+        
+        
+        
         cityName.text = weatherData?.name
         weather.text = weatherData?.weather[0]?.main
         currentTemperature.text = "\(String(describing: weatherData!.main!.temp!).prefix(2))\u{00B0}"
@@ -52,7 +81,8 @@ class CityDetailsVC: UIViewController {
                 print(error.debugDescription)
             }
         }
-        day.text = "\(DateFormatter().standaloneWeekdaySymbols![NSCalendar.current.component(.weekday, from: NSDate(timeIntervalSince1970: Double(weatherData!.dt!)) as Date)-1]) today"
+        
+        day.text = "\(DateFormatter().standaloneWeekdaySymbols![NSCalendar.current.component(.weekday, from: NSDate(timeIntervalSince1970: weatherData!.dt!) as Date)-1]) today"
         maximumTemperature.text = "\(String(describing: weatherData!.main!.tempMax!))\u{00B0}"
         minimumTemperature.text = "\(String(describing: weatherData!.main!.tempMin!))\u{00B0}"
         

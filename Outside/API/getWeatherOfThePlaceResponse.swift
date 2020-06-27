@@ -19,7 +19,7 @@ struct WeatherData: Codable {
     let visibility: Int?
     let wind: Wind?
     let clouds: Clouds?
-    let dt: Int?
+    let dt: Double?
     let sys: Sys?
     let timezone, id: Int?
     let name: String?

@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4Q7-k6-XhD" userLabel="Cities">
-                                <rect key="frame" x="0.0" y="44" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -97,15 +97,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="72"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cVN-Ja-aDL" userLabel="customBackground">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="72"/>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="04U-zO-Fnk" userLabel="Time">
                                                     <rect key="frame" x="20" y="5" width="36" height="19.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ib3-SH-VuN" userLabel="City">
-                                                    <rect key="frame" x="20" y="24" width="62" height="43"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ib3-SH-VuN" userLabel="City">
+                                                    <rect key="frame" x="20" y="31" width="52" height="36"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -126,8 +129,15 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="cVN-Ja-aDL" firstAttribute="leading" secondItem="Y1u-tD-6eN" secondAttribute="leading" id="2m0-EB-C42"/>
+                                            <constraint firstAttribute="trailing" secondItem="cVN-Ja-aDL" secondAttribute="trailing" id="peZ-JJ-WT1"/>
+                                            <constraint firstItem="cVN-Ja-aDL" firstAttribute="top" secondItem="Y1u-tD-6eN" secondAttribute="top" id="sLK-38-OFB"/>
+                                            <constraint firstAttribute="bottom" secondItem="cVN-Ja-aDL" secondAttribute="bottom" id="xii-Wg-efb"/>
+                                        </constraints>
                                         <connections>
                                             <outlet property="cityLabel" destination="Ib3-SH-VuN" id="jFq-F6-6xp"/>
+                                            <outlet property="customeBackground" destination="cVN-Ja-aDL" id="oOJ-cv-veI"/>
                                             <outlet property="temperatureLabel" destination="Ger-WA-Iug" id="qsy-G5-5uZ"/>
                                             <outlet property="timeLabel" destination="04U-zO-Fnk" id="CqO-ei-1EF"/>
                                         </connections>
@@ -139,9 +149,9 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.093582190573215485" green="0.46350514888763428" blue="0.5079960823059082" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="4Q7-k6-XhD" firstAttribute="top" secondItem="X64-Vn-lWx" secondAttribute="top" constant="44" id="Bkg-xu-Gwy"/>
+                            <constraint firstItem="4Q7-k6-XhD" firstAttribute="top" secondItem="X64-Vn-lWx" secondAttribute="top" id="Bkg-xu-Gwy"/>
                             <constraint firstItem="4Q7-k6-XhD" firstAttribute="leading" secondItem="gnm-b6-896" secondAttribute="leading" id="cEi-yS-Dfg"/>
                             <constraint firstItem="gnm-b6-896" firstAttribute="trailing" secondItem="4Q7-k6-XhD" secondAttribute="trailing" id="pgV-rE-nQK"/>
                             <constraint firstItem="4Q7-k6-XhD" firstAttribute="centerY" secondItem="X64-Vn-lWx" secondAttribute="centerY" id="pw7-PI-Itr"/>
@@ -219,6 +229,7 @@
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="crop" translatesAutoresizingMaskIntoConstraints="NO" id="x04-1D-OB7" userLabel="customBackground">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.84705882352941175" colorSpace="calibratedWhite"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WFJ-Uo-JdZ" userLabel="CityNameAndWeather">
                                 <rect key="frame" x="0.0" y="44" width="414" height="150"/>
@@ -572,6 +583,7 @@
                     <connections>
                         <outlet property="cityName" destination="YQQ-8G-ABd" id="hwf-zm-JDf"/>
                         <outlet property="currentTemperature" destination="Us3-TT-bk6" id="pO0-1d-NdI"/>
+                        <outlet property="customBackground" destination="x04-1D-OB7" id="KJM-wy-W0D"/>
                         <outlet property="day" destination="Xx8-lo-pbt" id="KTW-gq-8fM"/>
                         <outlet property="hourlyWeatherData" destination="2cO-WF-qWO" id="hxZ-kd-Xcp"/>
                         <outlet property="hourlyWeatherDataView" destination="HhY-1J-Zmh" id="ew4-eK-FO7"/>
