@@ -10,7 +10,9 @@ import UIKit
 
 class CityDetailsVC: UIViewController {
     
-    var weatherData: WeatherData?
+    //var weatherData: WeatherData?
+    var weatherData: [WeatherData?] = []
+    var cityRow: Int?
     var weatherDataDetailedCollection: [WeatherDataDetailed?] = []
     var currentOtherWeatherInformation:[[[String:String]]] = [] //= [[[:]]]
     @IBOutlet weak var customBackground: UIImageView!
@@ -39,7 +41,7 @@ class CityDetailsVC: UIViewController {
         
         
         
-        switch weatherData?.weather[0]?.main {
+        switch weatherData[cityRow!]?.weather[0]?.main {
             case "Clear":
                 customBackground.image = UIImage(named: "ClearDay")
             case "Clouds":
@@ -64,12 +66,12 @@ class CityDetailsVC: UIViewController {
         
         
         
-        cityName.text = weatherData?.name
-        weather.text = weatherData?.weather[0]?.main
-        currentTemperature.text = "\(String(describing: weatherData!.main!.temp!).prefix(2))\u{00B0}"
+        cityName.text = weatherData[cityRow!]?.name
+        weather.text = weatherData[cityRow!]?.weather[0]?.main
+        currentTemperature.text = "\(String(describing: weatherData[cityRow!]!.main!.temp!).prefix(2))\u{00B0}"
         
-        BaseAPI.sharedInstance().getDetailedWeatherData(latitude: (weatherData?.coord?.lat)!,
-                                                        longitude: (weatherData?.coord?.lon)!) { (weatherDetailedData, error) in
+        BaseAPI.sharedInstance().getDetailedWeatherData(latitude: (weatherData[cityRow!]!.coord?.lat)!,
+                                                        longitude: (weatherData[cityRow!]!.coord?.lon)!) { (weatherDetailedData, error) in
             if let weatherDetailedData = weatherDetailedData {
                 self.weatherDataDetailedCollection.append(weatherDetailedData)
                 DispatchQueue.main.async {
@@ -82,9 +84,9 @@ class CityDetailsVC: UIViewController {
             }
         }
         
-        day.text = "\(DateFormatter().standaloneWeekdaySymbols![NSCalendar.current.component(.weekday, from: NSDate(timeIntervalSince1970: weatherData!.dt!) as Date)-1]) today"
-        maximumTemperature.text = "\(String(describing: weatherData!.main!.tempMax!))\u{00B0}"
-        minimumTemperature.text = "\(String(describing: weatherData!.main!.tempMin!))\u{00B0}"
+        day.text = "\(DateFormatter().standaloneWeekdaySymbols![NSCalendar.current.component(.weekday, from: NSDate(timeIntervalSince1970: (weatherData[cityRow!]!.dt!)) as Date)-1]) today"
+        maximumTemperature.text = "\(String(describing: weatherData[cityRow!]!.main!.tempMax!))\u{00B0}"
+        minimumTemperature.text = "\(String(describing: weatherData[cityRow!]!.main!.tempMin!))\u{00B0}"
         
         //let screenSize: CGRect = UIScreen.main.bounds
         //scrollDataView.contentSize = CGSize(width: self.view.frame.width, height: screenSize.height)
@@ -116,21 +118,74 @@ class CityDetailsVC: UIViewController {
 
     
     func updateCurrentOtherWeatherInformation(weatherDataDetailedCollection: WeatherDataDetailed) {
-        self.currentOtherWeatherInformation.append([["SUNRISE": String(getTimeOfForecast(timeZone: weatherDataDetailedCollection.timezoneOffset
-            , time: Int(weatherDataDetailedCollection.current!.sunrise!)).prefix(5))],
-                                                    ["SUNSET":String(getTimeOfForecast(timeZone: weatherDataDetailedCollection.timezoneOffset, time: Int(weatherDataDetailedCollection.current!.sunset!)).prefix(5))]])
+       
+        if let timezoneOffset = weatherDataDetailedCollection.timezoneOffset {
+            if let current = weatherDataDetailedCollection.current {
+                if let sunrise = current.sunrise, let sunset = current.sunset {
+                    self.currentOtherWeatherInformation.append([["SUNRISE": String(getTimeOfForecast(timeZone: timezoneOffset, time: Int(sunrise)).prefix(5))],
+                            ["SUNSET":String(getTimeOfForecast(timeZone: timezoneOffset, time: Int(sunset)).prefix(5))]])
+                }
+            }
+        } else {
+            self.currentOtherWeatherInformation.append([["SUNRISE": "--"], ["SUNSET": "--"]])
+        }
         
-        self.currentOtherWeatherInformation.append([["FEELS LIKE":"\(String("\(weatherDataDetailedCollection.current!.feelsLike!)".prefix(2)))\u{00B0}"],
-                                                ["PRESSURE":"\(round(Double(weatherDataDetailedCollection.current!.pressure!) * 0.02953)) inHg"]])
         
-    
-        self.currentOtherWeatherInformation.append([["HUMIDITY":"\(weatherDataDetailedCollection.current!.humidity!)%"],
-                                                ["VISIBILITY":"\(String(describing: round(Double(weatherDataDetailedCollection.current!.visibility!) * 0.000621371))) mi"]])
+//        self.currentOtherWeatherInformation.append([["SUNRISE": String(getTimeOfForecast(timeZone: weatherDataDetailedCollection.timezoneOffset
+//            , time: Int(weatherDataDetailedCollection.current!.sunrise!)).prefix(5))],`
+//
+//                                                    ["SUNSET":String(getTimeOfForecast(timeZone: weatherDataDetailedCollection.timezoneOffset, time: Int(weatherDataDetailedCollection.current!.sunset!)).prefix(5))]])
         
-        self.currentOtherWeatherInformation.append([["WIND SPEED":"\(weatherDataDetailedCollection.current!.windSpeed!) mph"],
-                                                ["CHANCES OF RAIN":"\(String(describing: weatherDataDetailedCollection.current!.clouds!))%"]])
-        self.currentOtherWeatherInformation.append([["UV INDEX":"\(String(describing: weatherDataDetailedCollection.current!.uvi!))"],
-                                                ["DEW POINT":"\(String(describing: weatherDataDetailedCollection.current!.dewPoint!))\u{00B0}"]])
+        if let current = weatherDataDetailedCollection.current {
+            if let feelsLike = current.feelsLike, let pressure = current.pressure {
+                self.currentOtherWeatherInformation.append([["FEELS LIKE":"\(String("\(feelsLike)".prefix(2)))\u{00B0}"],
+                ["PRESSURE":"\(round(Double(pressure) * 0.02953)) inHg"]])
+            }
+        } else {
+            self.currentOtherWeatherInformation.append([["FEELS LIKE":"--"],
+            ["PRESSURE":"--"]])
+        }
+        
+//        self.currentOtherWeatherInformation.append([["FEELS LIKE":"\(String("\(weatherDataDetailedCollection.current!.feelsLike!)".prefix(2)))\u{00B0}"],
+//                                                ["PRESSURE":"\(round(Double(weatherDataDetailedCollection.current!.pressure!) * 0.02953)) inHg"]])
+        
+        if let current = weatherDataDetailedCollection.current {
+            if let humidity = current.humidity, let visibility = current.visibility {
+                self.currentOtherWeatherInformation.append([["HUMIDITY":"\(humidity)%"],
+                ["VISIBILITY":"\(String(describing: round(Double(visibility) * 0.000621371))) mi"]])
+            }
+        } else {
+            self.currentOtherWeatherInformation.append([["HUMIDITY":"--"],
+            ["VISIBILITY":"--"]])
+        }
+
+//        self.currentOtherWeatherInformation.append([["HUMIDITY":"\(weatherDataDetailedCollection.current!.humidity!)%"],
+//                                                ["VISIBILITY":"\(String(describing: round(Double(weatherDataDetailedCollection.current!.visibility!) * 0.000621371))) mi"]])
+        
+        if let current = weatherDataDetailedCollection.current {
+            if let windSpeed = current.windSpeed, let clouds = current.clouds {
+                self.currentOtherWeatherInformation.append([["WIND SPEED":"\(windSpeed) mph"],
+                ["CHANCES OF RAIN":"\(String(describing: clouds))%"]])
+            }
+        } else {
+            self.currentOtherWeatherInformation.append([["WIND SPEED":"--"],
+            ["CHANCES OF RAIN":"--"]])
+        }
+        
+//        self.currentOtherWeatherInformation.append([["WIND SPEED":"\(weatherDataDetailedCollection.current!.windSpeed!) mph"],
+//                                                ["CHANCES OF RAIN":"\(String(describing: weatherDataDetailedCollection.current!.clouds!))%"]])
+        if let current = weatherDataDetailedCollection.current {
+            if let uvi = current.uvi, let dewPoint = current.dewPoint {
+                self.currentOtherWeatherInformation.append([["UV INDEX":"\(String(uvi))"],
+                ["DEW POINT":"\(String(dewPoint))\u{00B0}"]])
+            }
+        } else {
+            self.currentOtherWeatherInformation.append([["UV INDEX":"--"],
+                                                    ["DEW POINT":"--"]])
+        }
+        
+//        self.currentOtherWeatherInformation.append([["UV INDEX":"\(String(describing: weatherDataDetailedCollection.current!.uvi!))"],
+//                                                ["DEW POINT":"\(String(describing: weatherDataDetailedCollection.current!.dewPoint!))\u{00B0}"]])
         
     }
     

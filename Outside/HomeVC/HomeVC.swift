@@ -161,7 +161,9 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
             } else {
                vc = storyboard?.instantiateViewController(withIdentifier: "CityDetails") as! CityDetailsVC
             }
-            vc.weatherData = weatherData[indexPath.row]
+            vc.weatherData = weatherData
+            vc.cityRow = indexPath.row
+            //vc.weatherData = weatherData[indexPath.row]
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }
@@ -169,20 +171,20 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        if editingStyle == UITableViewCell.EditingStyle.delete && indexPath.row != 0 {
+        if editingStyle == UITableViewCell.EditingStyle.delete {
             //numbers.remove(at: indexPath.row)
             weatherData.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
         }
     }
     
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        if(indexPath.row == 0 ){
-            return UITableViewCell.EditingStyle.none
-        } else {
-            return UITableViewCell.EditingStyle.delete
-        }
-    }
+//    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+//        if(indexPath.row == 0 ){
+//            return UITableViewCell.EditingStyle.none
+//        } else {
+//            return UITableViewCell.EditingStyle.delete
+//        }
+//    }
     
     
     @IBAction func addCity(_ sender: Any) {
