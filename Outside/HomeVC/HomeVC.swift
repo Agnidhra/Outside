@@ -12,6 +12,9 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
     
     @IBOutlet weak var cities: UITableView!
     var isCoordinateUpdated:Bool = false
+    var isCelsius: Bool? = true
+    
+    
     
     let locationManager = CLLocationManager()
 
@@ -42,19 +45,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
         if locationManager.location != nil {
             if !isCoordinateUpdated {
                 isCoordinateUpdated = true
-                BaseAPI.sharedInstance().getWeatherData(latitude: (locationManager.location?.coordinate.latitude)!,
-                        longitude: (locationManager.location?.coordinate.longitude)!) { (weatherData, error) in
-                    if let weatherData = weatherData {
-                        print(weatherData.timezone as Any)
-                        self.weatherData.append(weatherData)
-                        DispatchQueue.main.async {
-                            self.cities.reloadData()
-                        }
-
-                    } else {
-                        print(error.debugDescription)
-                    }
-                }
+                loadData(latitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!)
             }
         }
     }
@@ -66,19 +57,21 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
             print("locations = \(locValue.latitude) \(locValue.longitude)")
             isCoordinateUpdated = true
             if weatherData.count == 0 {
-                BaseAPI.sharedInstance().getWeatherData(latitude: (locationManager.location?.coordinate.latitude)!,
-                        longitude: (locationManager.location?.coordinate.longitude)!) { (weatherData, error) in
-                    if let weatherData = weatherData {
-                        print(weatherData.timezone as Any)
-                        self.weatherData.append(weatherData)
-                        DispatchQueue.main.async {
-                            self.cities.reloadData()
-                        }
-
-                    } else {
-                        print(error.debugDescription)
-                    }
-                }
+                loadData(latitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!)
+//                BaseAPI.sharedInstance().getWeatherData(latitude: (locationManager.location?.coordinate.latitude)!,
+//                        longitude: (locationManager.location?.coordinate.longitude)!,
+//                        unit: isCelsius! ? "metric" : "imperial") { (weatherData, error) in
+//                    if let weatherData = weatherData {
+//                        print(weatherData.timezone as Any)
+//                        self.weatherData.append(weatherData)
+//                        DispatchQueue.main.async {
+//                            self.cities.reloadData()
+//                        }
+//
+//                    } else {
+//                        print(error.debugDescription)
+//                    }
+//                }
             }
         }
         
@@ -111,7 +104,12 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
         if(indexPath.section == 0) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CityShortDetails", for: indexPath) as! CityShortDetailsCell
             cell.timeLabel?.text =  String(self.getTime(timeZone: weatherData[indexPath.row]?.timezone ?? nil).prefix(5))
-            cell.cityLabel?.text = weatherData[indexPath.row]?.name
+            if let place = weatherData[indexPath.row]?.name, (weatherData[indexPath.row]?.name!.count)!>0 {
+                cell.cityLabel?.text = place
+            } else {
+                cell.cityLabel?.text = "\(String(describing: weatherData[indexPath.row]!.coord!.lat!))\u{00B0} \(String(describing: weatherData[indexPath.row]!.coord!.lon!))\u{00B0}"
+            }
+            
             cell.temperatureLabel?.text = "\(String(describing: weatherData[indexPath.row]!.main!.temp!).prefix(2))\u{00B0}"
             
             if let backgroundImage = getImage(weather: weatherData[indexPath.row]?.weather[0]?.main) {
@@ -123,8 +121,20 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
             let cell = tableView.dequeueReusableCell(withIdentifier: "UnitAndAddFooterTableViewCell", for: indexPath) as! UnitAndAddFooterTableViewCell
             cell.add?.setTitle("+", for: .normal)
             cell.celsius?.setTitle("\u{00B0}C  ", for: .normal)
+            cell.celsius?.setTitle("\u{00B0}C  ", for: .highlighted)
             cell.farenhite?.setTitle("\u{00B0}F", for: .normal)
-            
+            cell.farenhite?.setTitle("\u{00B0}F", for: .highlighted)
+            if isCelsius! {
+//                cell.celsius?.titleLabel?.textColor = UIColor.yellow
+//                cell.farenhite?.titleLabel?.textColor = UIColor.white
+//                cell.celsius!.isHighlighted = false
+//                cell.farenhite!.isHighlighted = false
+            } else {
+//                cell.celsius?.titleLabel?.textColor = UIColor.white
+//                cell.farenhite?.titleLabel?.textColor = UIColor.yellow
+//                cell.celsius?.isHighlighted = false
+//                cell.farenhite?.isHighlighted = true
+            }
             return cell
         }
         
@@ -144,6 +154,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
             }
             vc.weatherData = weatherData
             vc.cityRow = indexPath.row
+            vc.isCelsius = self.isCelsius
             //vc.weatherData = weatherData[indexPath.row]
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
@@ -176,10 +187,64 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
            vc = storyboard?.instantiateViewController(withIdentifier: "MapSelectionViewController") as! MapSelectionViewController
         }
         vc.weatherDataCollection = self.weatherData
+        vc.isCelsius = self.isCelsius
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
     
+    @IBAction func setUnit(_ sender: UIButton) {
+        switch sender.tag {
+        case 1:
+            isCelsius = true
+            updateData()
+            
+        case 2:
+            isCelsius = false
+            updateData()
+        default:
+            isCelsius = true
+        }
+    }
+    
+    
+    func loadData(latitude: Double, longitude: Double) {
+        BaseAPI.sharedInstance().getWeatherData(latitude: (locationManager.location?.coordinate.latitude)!,
+                longitude: (locationManager.location?.coordinate.longitude)!,
+                unit: isCelsius! ? "metric" : "imperial") { (weatherData, error) in
+            if let weatherData = weatherData {
+                print(weatherData.timezone as Any)
+                self.weatherData.append(weatherData)
+                DispatchQueue.main.async {
+                    self.cities.reloadData()
+                }
+
+            } else {
+                print(error.debugDescription)
+            }
+        }
+    }
+    
+    func updateData() {
+        if (weatherData.count > 0) {
+            for index in 0..<weatherData.count {
+            //for weather in weatherData {
+                BaseAPI.sharedInstance().getWeatherData(latitude: weatherData[index]!.coord!.lat!,
+                        longitude: weatherData[index]!.coord!.lon!,
+                        unit: isCelsius! ? "metric" : "imperial") { (weatherData, error) in
+                    if let weatherData = weatherData {
+                        self.weatherData[index] = weatherData
+                        DispatchQueue.main.async {
+                            self.cities.reloadData()
+                        }
+                    } else {
+                        print(error.debugDescription)
+                    }
+                }
+            }
+            
+        }
+        
+    }
     
 }
 

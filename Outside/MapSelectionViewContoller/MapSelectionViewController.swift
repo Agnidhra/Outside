@@ -14,6 +14,7 @@ class MapSelectionViewController: UIViewController, MKMapViewDelegate {
     var weatherDataCollection: [WeatherData?] = []
     @IBOutlet weak var mapView: MKMapView!
     var pinMarking: MKPointAnnotation? = nil
+    var isCelsius: Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,9 +57,11 @@ class MapSelectionViewController: UIViewController, MKMapViewDelegate {
                 pinMarking!.coordinate = locCoord
             } else if sender.state == .ended {
                 BaseAPI.sharedInstance().getWeatherData(latitude: (pinMarking!.coordinate.latitude),
-                                                        longitude: (pinMarking!.coordinate.longitude)) { (weatherData, error) in
+                                                        longitude: (pinMarking!.coordinate.longitude),
+                                                        unit: isCelsius! ? "metric" : "imperial") { (weatherData, error) in
                     if let weatherData = weatherData {
                         print(weatherData.timezone as Any)
+                        self.pinMarking?.title = weatherData.name
                         self.weatherDataCollection.append(weatherData)
 //                        DispatchQueue.main.async {
 //                            self.displayPins(self.weatherData)

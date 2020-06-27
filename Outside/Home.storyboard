@@ -29,18 +29,22 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="72"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eae-SO-oVg" userLabel="Celsius">
-                                                    <rect key="frame" x="20" y="11" width="30" height="50"/>
+                                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eae-SO-oVg" userLabel="Celsius">
+                                                    <rect key="frame" x="20" y="11" width="50" height="50"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="1lP-Gd-5tP"/>
                                                         <constraint firstAttribute="height" constant="50" id="5MV-Pq-Icq"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                     <state key="normal">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="setUnit:" destination="lOf-hI-cbA" eventType="touchUpInside" id="T2W-pz-TVR"/>
+                                                    </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eir-s3-80l" userLabel="Breaker">
-                                                    <rect key="frame" x="45" y="11" width="8" height="50"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eir-s3-80l" userLabel="Breaker">
+                                                    <rect key="frame" x="65" y="11" width="8" height="50"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="50" id="tyC-c1-ALT"/>
                                                     </constraints>
@@ -48,12 +52,18 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1kU-bS-5lD" userLabel="Farenhite">
-                                                    <rect key="frame" x="58" y="17" width="30" height="38"/>
+                                                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1kU-bS-5lD" userLabel="Farenhite">
+                                                    <rect key="frame" x="78" y="17" width="50" height="38"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="ytl-T6-EQ5"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="21"/>
                                                     <state key="normal">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="setUnit:" destination="lOf-hI-cbA" eventType="touchDragInside" id="m69-j2-s7c"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O9i-p0-Zxn" userLabel="add">
                                                     <rect key="frame" x="294" y="11" width="100" height="50"/>

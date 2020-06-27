@@ -17,11 +17,11 @@ class BaseAPI {
         return Singleton.shared
     }
     
-    func getWeatherData(latitude: Double, longitude: Double, completion: @escaping (_ result: WeatherData?, _ error: Error?) -> Void) {
+    func getWeatherData(latitude: Double, longitude: Double, unit:String, completion: @escaping (_ result: WeatherData?, _ error: Error?) -> Void) {
         let parameters = [ "lat":"\(latitude)",
             "lon":"\(longitude)",
             "appid": "c9a9c5b2931b82c759f7c418dc670cc4",
-            "units":"metric"]
+            "units":unit]
         //getCall(APIConstants.path, parameters: parameters, completionHandlerForGET: <#T##(Data?, NSError?) -> Void#>)
         
         getCall(path: APIConstants.shortDataPath, parameters: parameters) { (data, error) in
@@ -39,12 +39,12 @@ class BaseAPI {
         }
     }
     
-    func getDetailedWeatherData(latitude: Double, longitude: Double, completion: @escaping (_ result: WeatherDataDetailed?, _ error: Error?) -> Void) {
+    func getDetailedWeatherData(latitude: Double, longitude: Double, unit:String, completion: @escaping (_ result: WeatherDataDetailed?, _ error: Error?) -> Void) {
         let parameters = [ "lat":"\(latitude)",
             "lon":"\(longitude)",
             "appid": APIConstants.APIKEY,
             "exclude":"minutely",
-            "units":"metric"]
+            "units":unit]
         
         getCall(path: APIConstants.detailedDataPath, parameters: parameters) { (data, error) in
             if let error = error { completion(nil, error); return }

@@ -13,8 +13,11 @@ class CityDetailsVC: UIViewController {
     //var weatherData: WeatherData?
     var weatherData: [WeatherData?] = []
     var cityRow: Int?
+    var isCelsius: Bool? = true
     var weatherDataDetailedCollection: [WeatherDataDetailed?] = []
     var currentOtherWeatherInformation:[[[String:String]]] = [] //= [[[:]]]
+    
+    
     @IBOutlet weak var customBackground: UIImageView!
     
     //City Name And Weather Outlet
@@ -43,12 +46,20 @@ class CityDetailsVC: UIViewController {
             customBackground.image = backgroundImage
         }
         
-        cityName.text = weatherData[cityRow!]?.name
+        if let place = weatherData[cityRow!]?.name, (weatherData[cityRow!]!.name!.count)>0 {
+            cityName.text = place
+        } else {
+            cityName.text = "\(String(describing: weatherData[cityRow!]!.coord!.lat!))\u{00B0} \(String(describing: weatherData[cityRow!]!.coord!.lon!))\u{00B0}"
+        }
+        
+        //cityName.text = weatherData[cityRow!]?.name
         weather.text = weatherData[cityRow!]?.weather[0]?.main
         currentTemperature.text = "\(String(describing: weatherData[cityRow!]!.main!.temp!).prefix(2))\u{00B0}"
         
         BaseAPI.sharedInstance().getDetailedWeatherData(latitude: (weatherData[cityRow!]!.coord?.lat)!,
-                                                        longitude: (weatherData[cityRow!]!.coord?.lon)!) { (weatherDetailedData, error) in
+                                                        longitude: (weatherData[cityRow!]!.coord?.lon)!,
+                                                        unit: isCelsius! ? "metric" : "imperial"
+        ) { (weatherDetailedData, error) in
             if let weatherDetailedData = weatherDetailedData {
                 self.weatherDataDetailedCollection.append(weatherDetailedData)
                 DispatchQueue.main.async {
