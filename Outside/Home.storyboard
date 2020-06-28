@@ -201,9 +201,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uKf-Bz-4JK">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="mutedStandard" showsUserLocation="YES" showsScale="YES" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uKf-Bz-4JK">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <connections>
+                                    <outlet property="delegate" destination="Tdn-oI-wNM" id="dOz-nJ-HD5"/>
                                     <outletCollection property="gestureRecognizers" destination="Z7n-GU-he7" appends="YES" id="hSU-aq-WAt"/>
                                 </connections>
                             </mapView>

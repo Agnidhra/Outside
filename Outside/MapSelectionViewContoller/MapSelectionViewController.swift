@@ -33,8 +33,10 @@ class MapSelectionViewController: UIViewController, MKMapViewDelegate {
             pin.coordinate = CLLocationCoordinate2DMake(latitude!, longitude!)
             if let name = eachPin?.name, name.count > 0 {
                 pin.title = name
+                pin.subtitle = "\(eachPin!.main!.temp!)\u{00B0}"
             } else {
                 pin.title = "\(String(describing: latitude!)), \(String(describing: longitude!))"
+                pin.subtitle = "\(eachPin!.main!.temp!)\u{00B0}"
             }
             
             mapView.addAnnotation(pin)
@@ -62,8 +64,10 @@ class MapSelectionViewController: UIViewController, MKMapViewDelegate {
                     self.updateUIOnMainThread {
                         if let name = weatherData.name , name.count > 0{
                             self.pinMarking?.title = name
+                            self.pinMarking?.subtitle = "\(weatherData.main!.temp!)\u{00B0}"
                         } else {
                             self.pinMarking?.title = "\(String(describing: weatherData.coord!.lat!)), \(String(describing: weatherData.coord!.lon!))"
+                            self.pinMarking?.subtitle = "\(weatherData.main!.temp!)\u{00B0}"
                         }
                     }
                     self.checkAndSaveData(latitude: (weatherData.coord?.lat)!, longitude: (weatherData.coord?.lon)!)
@@ -85,9 +89,14 @@ class MapSelectionViewController: UIViewController, MKMapViewDelegate {
         
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = false
-            pinView!.pinTintColor = .red
+            pinView!.canShowCallout = true
+            if #available(iOS 13.0, *) {
+                pinView!.pinTintColor = .systemFill
+            } else {
+                pinView!.pinTintColor = .red
+            }
             pinView!.animatesDrop = true
+            pinView!.isDraggable = true
         } else {
             pinView!.annotation = annotation
         }
