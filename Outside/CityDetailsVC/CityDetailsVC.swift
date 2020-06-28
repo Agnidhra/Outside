@@ -20,8 +20,9 @@ class CityDetailsVC: UIViewController {
     
     //MARK:- Outlets
     
-    //Custom background
+    //Custom background and Activity Indicator
     @IBOutlet weak var customBackground: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     //City Name And Weather Outlet
     @IBOutlet weak var cityName: UILabel!
@@ -44,7 +45,8 @@ class CityDetailsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
         //Setting Custom background based on Api Data.
         if let backgroundImage = getImage(weather: weatherData[cityRow!]?.weather[0]?.main) {
             customBackground.image = backgroundImage
@@ -70,6 +72,8 @@ class CityDetailsVC: UIViewController {
                     self.hourlyWeatherData.reloadData()
                     self.updateCurrentOtherWeatherInformation(weatherDataDetailedCollection: weatherDetailedData)
                     self.weekDayTemperatureTable.reloadData()
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
                 }
             } else {
                 print(error.debugDescription)

@@ -41,7 +41,7 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                     <state key="normal">
-                                                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="setUnit:" destination="lOf-hI-cbA" eventType="touchUpInside" id="T2W-pz-TVR"/>
@@ -64,13 +64,13 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                     <state key="normal">
-                                                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="setUnit:" destination="lOf-hI-cbA" eventType="touchUpInside" id="UrK-hj-e1F"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O9i-p0-Zxn" userLabel="add">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O9i-p0-Zxn" userLabel="add">
                                                     <rect key="frame" x="294" y="11" width="100" height="50"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="100" id="JPs-Cc-N1J"/>
@@ -163,7 +163,7 @@
                                     <outlet property="delegate" destination="lOf-hI-cbA" id="rGk-rz-Gn5"/>
                                 </connections>
                             </tableView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="6Tf-7h-9Ch">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="6Tf-7h-9Ch">
                                 <rect key="frame" x="188.5" y="434.5" width="37" height="37"/>
                                 <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
@@ -582,6 +582,10 @@
                                     <constraint firstAttribute="bottom" secondItem="c9u-71-3BY" secondAttribute="bottom" id="k5i-bw-wgm"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="esD-vy-ptG">
+                                <rect key="frame" x="188.5" y="434.5" width="37" height="37"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                         <constraints>
@@ -596,8 +600,10 @@
                             <constraint firstItem="x04-1D-OB7" firstAttribute="leading" secondItem="6Fc-J8-C0C" secondAttribute="leading" id="U8f-Ff-QAx"/>
                             <constraint firstItem="WFJ-Uo-JdZ" firstAttribute="leading" secondItem="6Fc-J8-C0C" secondAttribute="leading" id="Y5I-Dh-fZc"/>
                             <constraint firstItem="6YH-KU-xps" firstAttribute="leading" secondItem="6Fc-J8-C0C" secondAttribute="leading" id="buJ-bp-q3y"/>
+                            <constraint firstItem="esD-vy-ptG" firstAttribute="centerX" secondItem="6Fc-J8-C0C" secondAttribute="centerX" id="dad-1o-ZeG"/>
                             <constraint firstItem="WFJ-Uo-JdZ" firstAttribute="top" secondItem="6Fc-J8-C0C" secondAttribute="top" id="fAg-ld-yMf"/>
                             <constraint firstItem="6Fc-J8-C0C" firstAttribute="trailing" secondItem="6YH-KU-xps" secondAttribute="trailing" id="j2J-Yc-Wzz"/>
+                            <constraint firstItem="esD-vy-ptG" firstAttribute="centerY" secondItem="6Fc-J8-C0C" secondAttribute="centerY" id="j9E-gY-75A"/>
                             <constraint firstItem="x04-1D-OB7" firstAttribute="top" secondItem="NlE-4F-tGJ" secondAttribute="top" id="kNg-1P-jkG"/>
                             <constraint firstAttribute="width" secondItem="i0h-80-3Z1" secondAttribute="width" id="ouH-p0-YVn"/>
                             <constraint firstAttribute="width" secondItem="i0h-80-3Z1" secondAttribute="width" id="p02-pd-Ur4"/>
@@ -609,6 +615,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="k9N-er-fWb"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="esD-vy-ptG" id="Usx-cH-IIq"/>
                         <outlet property="cityName" destination="YQQ-8G-ABd" id="hwf-zm-JDf"/>
                         <outlet property="currentTemperature" destination="Us3-TT-bk6" id="pO0-1d-NdI"/>
                         <outlet property="customBackground" destination="x04-1D-OB7" id="KJM-wy-W0D"/>
