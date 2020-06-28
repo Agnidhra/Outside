@@ -31,7 +31,12 @@ class MapSelectionViewController: UIViewController, MKMapViewDelegate {
             let latitude = eachPin!.coord!.lat
             let longitude = eachPin!.coord!.lon
             pin.coordinate = CLLocationCoordinate2DMake(latitude!, longitude!)
-            pin.title = eachPin?.name
+            if let name = eachPin?.name, name.count > 0 {
+                pin.title = name
+            } else {
+                pin.title = "\(String(describing: latitude!)), \(String(describing: longitude!))"
+            }
+            
             mapView.addAnnotation(pin)
         }
         mapView.showAnnotations(mapView.annotations, animated: true)
@@ -52,10 +57,15 @@ class MapSelectionViewController: UIViewController, MKMapViewDelegate {
             BaseAPI.sharedInstance().getWeatherData(latitude: (pinMarking!.coordinate.latitude),
                                                     longitude: (pinMarking!.coordinate.longitude),
                                                     unit: UserDefaults.standard.bool(forKey: "isCelsius") ? "metric" : "imperial") { (weatherData, error) in
+                self.weatherDataCollection.append(weatherData)
                 if let weatherData = weatherData {
-                    print(weatherData.timezone as Any)
-                    self.pinMarking?.title = weatherData.name
-                    self.weatherDataCollection.append(weatherData)
+                    self.updateUIOnMainThread {
+                        if let name = weatherData.name , name.count > 0{
+                            self.pinMarking?.title = name
+                        } else {
+                            self.pinMarking?.title = "\(String(describing: weatherData.coord!.lat!)), \(String(describing: weatherData.coord!.lon!))"
+                        }
+                    }
                     self.checkAndSaveData(latitude: (weatherData.coord?.lat)!, longitude: (weatherData.coord?.lon)!)
                 } else {
                     print(error.debugDescription)

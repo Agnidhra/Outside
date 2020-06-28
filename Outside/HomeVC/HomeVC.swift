@@ -90,7 +90,6 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
     
     //MARK:- Method to Set Unit for Temperature Celsius / Farenhite Using property and UserDefaults.
     @IBAction func setUnit(_ sender: UIButton) {
-        print("setUnit", sender.tag)
         switch sender.tag {
             case 11:
                 if !UserDefaults.standard.bool(forKey: "isCelsius") {
@@ -119,7 +118,6 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
                     longitude: getAllPinDetails()![Coordinates].longitude,
                     unit: UserDefaults.standard.bool(forKey: "isCelsius") ? "metric" : "imperial") { (weatherData, error) in
                 if let weatherData = weatherData {
-                    print(weatherData.timezone as Any)
                     self.weatherData.append(weatherData)
                     DispatchQueue.main.async {
                         self.cities.reloadData()
