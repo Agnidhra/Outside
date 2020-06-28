@@ -63,22 +63,13 @@ class MapSelectionViewController: UIViewController, MKMapViewDelegate {
                         print(weatherData.timezone as Any)
                         self.pinMarking?.title = weatherData.name
                         self.weatherDataCollection.append(weatherData)
-//                        DispatchQueue.main.async {
-//                            self.displayPins(self.weatherData)
-//                        }
-
+                        self.checkAndSaveData(latitude: (weatherData.coord?.lat)!, longitude: (weatherData.coord?.lon)!)
                     } else {
                         print(error.debugDescription)
                         self.showAlert(message: "No Information Found")
                         
                     }
                 }
-    //            _ = PinDetails(
-    //                latCoordinate: String(pinMarking!.coordinate.latitude),
-    //                longCoordinate: String(pinMarking!.coordinate.longitude),
-    //                context: CoreDataStackDetails.getSharedInstance().currentMOContext
-    //        )
-    //            saveCurrentContext()
             }
         }
         
@@ -115,8 +106,8 @@ class MapSelectionViewController: UIViewController, MKMapViewDelegate {
         } else {
            vc = storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! HomeVC
         }
-        vc.weatherData = self.weatherDataCollection
-        vc.isCoordinateUpdated = true
+//        vc.weatherData = self.weatherDataCollection
+//        vc.isCoordinateUpdated = true
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }

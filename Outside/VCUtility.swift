@@ -50,4 +50,11 @@ extension UIViewController {
         }
     }
     
+    func saveCurrentContext() {
+        do {
+            try CoreDataStackMethods.getSharedInstance().saveCurrentContext()
+        } catch {
+            showAlert(withTitle: "Error", message : "Encountered Some Issue While Saving Pin Location: \(error). Please Try Again")
+        }
+    }
 }

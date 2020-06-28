@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		550952BB24A7D3EB000190B7 /* CoordinatesData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 550952B924A7D3EB000190B7 /* CoordinatesData.xcdatamodeld */; };
+		550952BD24A7D4DC000190B7 /* CoreDataStackMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550952BC24A7D4DC000190B7 /* CoreDataStackMethods.swift */; };
+		550952C124A7DB43000190B7 /* SavedCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550952C024A7DB43000190B7 /* SavedCoordinates.swift */; };
+		550952C324A85195000190B7 /* HomeVCDataMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550952C224A85195000190B7 /* HomeVCDataMethods.swift */; };
+		550952C524A858E4000190B7 /* HomeVCTableViewMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550952C424A858E4000190B7 /* HomeVCTableViewMethods.swift */; };
 		553EE7D8249E16EA00D5261A /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553EE7D7249E16EA00D5261A /* APIConstants.swift */; };
 		553EE7DA249E248C00D5261A /* HourlyWeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553EE7D9249E248C00D5261A /* HourlyWeatherCollectionViewCell.swift */; };
 		553EE7DC249E270800D5261A /* CityDetailsVCExtensionForHourlyWeatherCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553EE7DB249E270800D5261A /* CityDetailsVCExtensionForHourlyWeatherCollectionView.swift */; };
@@ -31,6 +36,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		550952BA24A7D3EB000190B7 /* CoordinatesData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoordinatesData.xcdatamodel; sourceTree = "<group>"; };
+		550952BC24A7D4DC000190B7 /* CoreDataStackMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackMethods.swift; sourceTree = "<group>"; };
+		550952C024A7DB43000190B7 /* SavedCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedCoordinates.swift; sourceTree = "<group>"; };
+		550952C224A85195000190B7 /* HomeVCDataMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVCDataMethods.swift; sourceTree = "<group>"; };
+		550952C424A858E4000190B7 /* HomeVCTableViewMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVCTableViewMethods.swift; sourceTree = "<group>"; };
 		553EE7D7249E16EA00D5261A /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
 		553EE7D9249E248C00D5261A /* HourlyWeatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyWeatherCollectionViewCell.swift; sourceTree = "<group>"; };
 		553EE7DB249E270800D5261A /* CityDetailsVCExtensionForHourlyWeatherCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityDetailsVCExtensionForHourlyWeatherCollectionView.swift; sourceTree = "<group>"; };
@@ -67,6 +77,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		550952B824A7D327000190B7 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				550952B924A7D3EB000190B7 /* CoordinatesData.xcdatamodeld */,
+				550952BC24A7D4DC000190B7 /* CoreDataStackMethods.swift */,
+				550952C024A7DB43000190B7 /* SavedCoordinates.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		61000C36249B0F7300C64711 = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +106,7 @@
 		61000C41249B0F7300C64711 /* Outside */ = {
 			isa = PBXGroup;
 			children = (
+				550952B824A7D327000190B7 /* Data */,
 				61DEA1EF24A5BD5E00486F83 /* VCUtility.swift */,
 				61DEA1EC24A5BABD00486F83 /* MapSelectionViewContoller */,
 				616433CF249DE0C000171D67 /* CityDetailsVC */,
@@ -132,6 +153,8 @@
 				61000C46249B0F7300C64711 /* HomeVC.swift */,
 				61865C1F249DB39F00EB339B /* CityShortDetailsCell.swift */,
 				615B757E24A1469800B6929D /* UnitAndAddFooterTableViewCell.swift */,
+				550952C224A85195000190B7 /* HomeVCDataMethods.swift */,
+				550952C424A858E4000190B7 /* HomeVCTableViewMethods.swift */,
 			);
 			path = HomeVC;
 			sourceTree = "<group>";
@@ -219,15 +242,20 @@
 				61000C62249C69DD00C64711 /* APIUtility.swift in Sources */,
 				61000C43249B0F7300C64711 /* AppDelegate.swift in Sources */,
 				55505680249FAB3100AE65D8 /* CurrentOtherWeatherInformationTableViewCell.swift in Sources */,
+				550952BB24A7D3EB000190B7 /* CoordinatesData.xcdatamodeld in Sources */,
 				553EE7DC249E270800D5261A /* CityDetailsVCExtensionForHourlyWeatherCollectionView.swift in Sources */,
 				616433F3249E01E600171D67 /* getWeatherOfThePlaceResponseDetailed.swift in Sources */,
+				550952C524A858E4000190B7 /* HomeVCTableViewMethods.swift in Sources */,
 				61000C45249B0F7300C64711 /* SceneDelegate.swift in Sources */,
 				61000C5E249C691600C64711 /* getWeatherOfThePlaceResponse.swift in Sources */,
 				553EE7D8249E16EA00D5261A /* APIConstants.swift in Sources */,
+				550952C324A85195000190B7 /* HomeVCDataMethods.swift in Sources */,
 				557C3521249F836500269E03 /* DailyWeatherDataTableViewCell.swift in Sources */,
 				61865C20249DB39F00EB339B /* CityShortDetailsCell.swift in Sources */,
+				550952C124A7DB43000190B7 /* SavedCoordinates.swift in Sources */,
 				553EE7DA249E248C00D5261A /* HourlyWeatherCollectionViewCell.swift in Sources */,
 				615B757F24A1469800B6929D /* UnitAndAddFooterTableViewCell.swift in Sources */,
+				550952BD24A7D4DC000190B7 /* CoreDataStackMethods.swift in Sources */,
 				616433D1249DE0E100171D67 /* CityDetailsVC.swift in Sources */,
 				557C351F249F811500269E03 /* CityDetailsVCExtensionForDailyWeatherTableView.swift in Sources */,
 				61DEA1F024A5BD5E00486F83 /* VCUtility.swift in Sources */,
@@ -426,6 +454,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		550952B924A7D3EB000190B7 /* CoordinatesData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				550952BA24A7D3EB000190B7 /* CoordinatesData.xcdatamodel */,
+			);
+			currentVersion = 550952BA24A7D3EB000190B7 /* CoordinatesData.xcdatamodel */;
+			path = CoordinatesData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 61000C37249B0F7300C64711 /* Project object */;
 }
