@@ -13,6 +13,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
     @IBOutlet weak var cities: UITableView!
     var isCoordinateUpdated:Bool = false
     var isCelsius: Bool? = true
+    @IBOutlet weak var customBackground: UIImageView!
     
     
     
@@ -22,6 +23,7 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        isCelsius = UserDefaults.standard.bool(forKey: "isCelsius")
         print("AfterLoadData",weatherData.count)
         if locationManager.location == nil && !isCoordinateUpdated && weatherData.count == 0 {
             // Ask for Authorisation from the User.
@@ -90,13 +92,13 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
     
     
     
-//    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-//        if(indexPath.row == 0 ){
-//            return UITableViewCell.EditingStyle.none
-//        } else {
-//            return UITableViewCell.EditingStyle.delete
-//        }
-//    }
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        if(indexPath.section == 0 ){
+            return UITableViewCell.EditingStyle.delete
+        } else {
+            return UITableViewCell.EditingStyle.none
+        }
+    }
     
     
     @IBAction func addCity(_ sender: Any) {
@@ -113,17 +115,29 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
     }
     
     @IBAction func setUnit(_ sender: UIButton) {
+        print("setUnit", sender.tag)
         switch sender.tag {
-        case 1:
-            isCelsius = true
-            updateData()
-            
-        case 2:
-            isCelsius = false
-            updateData()
-        default:
-            isCelsius = true
+            case 11:
+                if !isCelsius! {
+                    UserDefaults.standard.set(true, forKey: "isCelsius")
+                    isCelsius = true
+                    updateData()
+                    self.cities.reloadData()
+                }
+            case 12:
+                if isCelsius! {
+                    UserDefaults.standard.set(false, forKey: "isCelsius")
+                    isCelsius = false
+                    updateData()
+                    self.cities.reloadData()
+                }
+            default:
+//                isCelsius = true
+//                self.cities.reloadData()
+            return
+
         }
+        
     }
     
     func loadData() {
@@ -150,12 +164,13 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
     }
     
     func updateData() {
+        print("updateData", isCelsius)
         if (weatherData.count > 0) {
             for index in 0..<weatherData.count {
             //for weather in weatherData {
                 BaseAPI.sharedInstance().getWeatherData(latitude: weatherData[index]!.coord!.lat!,
                         longitude: weatherData[index]!.coord!.lon!,
-                        unit: isCelsius! ? "metric" : "imperial") { (weatherData, error) in
+                        unit: self.isCelsius! ? "metric" : "imperial") { (weatherData, error) in
                     if let weatherData = weatherData {
                         self.weatherData[index] = weatherData
                         DispatchQueue.main.async {

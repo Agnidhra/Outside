@@ -54,7 +54,8 @@ class CityDetailsVC: UIViewController {
         
         //cityName.text = weatherData[cityRow!]?.name
         weather.text = weatherData[cityRow!]?.weather[0]?.main
-        currentTemperature.text = "\(String(describing: weatherData[cityRow!]!.main!.temp!).prefix(2))\u{00B0}"
+        //currentTemperature.text = "\(String(describing: weatherData[cityRow!]!.main!.temp!).prefix(2))\u{00B0}"
+        currentTemperature.text = "\(String(describing: weatherData[cityRow!]!.main!.temp!).strstr(needle: ".", beforeNeedle: true)!)\u{00B0}"
         
         BaseAPI.sharedInstance().getDetailedWeatherData(latitude: (weatherData[cityRow!]!.coord?.lat)!,
                                                         longitude: (weatherData[cityRow!]!.coord?.lon)!,
@@ -126,7 +127,7 @@ class CityDetailsVC: UIViewController {
         
         if let current = weatherDataDetailedCollection.current {
             if let feelsLike = current.feelsLike, let pressure = current.pressure {
-                self.currentOtherWeatherInformation.append([["FEELS LIKE":"\(String("\(feelsLike)".prefix(2)))\u{00B0}"],
+                self.currentOtherWeatherInformation.append([["FEELS LIKE":"\(String("\(feelsLike)".strstr(needle: ".", beforeNeedle: true)!))\u{00B0}"],
                 ["PRESSURE":"\(round(Double(pressure) * 0.02953)) inHg"]])
             }
         } else {
@@ -179,7 +180,18 @@ class CityDetailsVC: UIViewController {
     
     
     @IBAction func dismissCityDetailsPage(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        //self.dismiss(animated: true, completion: nil)
+        let vc:HomeVC
+                if #available(iOS 13.0, *) {
+                    vc = storyboard?.instantiateViewController(identifier: "HomeVC") as! HomeVC
+                } else {
+                   vc = storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! HomeVC
+                }
+        //        vc.weatherData = self.weatherDataCollection
+        //        vc.isCoordinateUpdated = true
+                vc.isCelsius = self.isCelsius
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true, completion: nil)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

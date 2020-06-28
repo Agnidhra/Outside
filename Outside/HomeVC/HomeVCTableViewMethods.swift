@@ -33,7 +33,8 @@ extension HomeVC {
                     cell.cityLabel?.text = "\(String(describing: weatherData[indexPath.row]!.coord!.lat!))\u{00B0} \(String(describing: weatherData[indexPath.row]!.coord!.lon!))\u{00B0}"
                 }
                 
-                cell.temperatureLabel?.text = "\(String(describing: weatherData[indexPath.row]!.main!.temp!).prefix(2))\u{00B0}"
+                //cell.temperatureLabel?.text = "\(String(describing: weatherData[indexPath.row]!.main!.temp!).prefix(2))\u{00B0}"
+                cell.temperatureLabel?.text = "\(String(describing: weatherData[indexPath.row]!.main!.temp!).strstr(needle: ".", beforeNeedle: true)!)\u{00B0}"
                 
                 if let backgroundImage = getImage(weather: weatherData[indexPath.row]?.weather[0]?.main) {
                            cell.customeBackground?.image = backgroundImage
@@ -47,16 +48,16 @@ extension HomeVC {
                 cell.celsius?.setTitle("\u{00B0}C  ", for: .highlighted)
                 cell.farenhite?.setTitle("\u{00B0}F", for: .normal)
                 cell.farenhite?.setTitle("\u{00B0}F", for: .highlighted)
-                if isCelsius! {
-    //                cell.celsius?.titleLabel?.textColor = UIColor.yellow
-    //                cell.farenhite?.titleLabel?.textColor = UIColor.white
-    //                cell.celsius!.isHighlighted = false
-    //                cell.farenhite!.isHighlighted = false
+                if UserDefaults.standard.bool(forKey: "isCelsius") {
+                    cell.celsius?.titleLabel?.textColor = UIColor.red
+                    cell.celsius?.isEnabled = false
+                    cell.farenhite?.isEnabled = true
+                    cell.farenhite?.titleLabel?.textColor = UIColor.white
                 } else {
-    //                cell.celsius?.titleLabel?.textColor = UIColor.white
-    //                cell.farenhite?.titleLabel?.textColor = UIColor.yellow
-    //                cell.celsius?.isHighlighted = false
-    //                cell.farenhite?.isHighlighted = true
+                    cell.farenhite?.titleLabel?.textColor = UIColor.red
+                    cell.farenhite?.isEnabled = false
+                    cell.celsius?.isEnabled = true
+                    cell.celsius?.titleLabel?.textColor = UIColor.white
                 }
                 return cell
             }
@@ -85,12 +86,15 @@ extension HomeVC {
         }
         
         func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-            
-            if editingStyle == UITableViewCell.EditingStyle.delete {
-                //numbers.remove(at: indexPath.row)
-                checkAndDeleteData(latitude: (weatherData[indexPath.row]?.coord?.lat)!, longitude: (weatherData[indexPath.row]?.coord?.lon)!)
-                self.weatherData.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
+            if indexPath.section == 0 {
+                if editingStyle == UITableViewCell.EditingStyle.delete {
+                    //numbers.remove(at: indexPath.row)
+                    checkAndDeleteData(latitude: (weatherData[indexPath.row]?.coord?.lat)!, longitude: (weatherData[indexPath.row]?.coord?.lon)!)
+                    self.weatherData.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
+                }
             }
+            
+            
         }
 }

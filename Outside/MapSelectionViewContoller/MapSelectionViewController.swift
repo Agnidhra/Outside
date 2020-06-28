@@ -108,6 +108,7 @@ class MapSelectionViewController: UIViewController, MKMapViewDelegate {
         }
 //        vc.weatherData = self.weatherDataCollection
 //        vc.isCoordinateUpdated = true
+        vc.isCelsius = self.isCelsius
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
