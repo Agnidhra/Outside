@@ -8,7 +8,7 @@
 
 import Foundation
 
-// MARK: - Welcome
+// MARK: - WeatherDataDetailed
 struct WeatherDataDetailed: Codable {
     let lat, lon: Double?
     let timezone: String?
@@ -47,14 +47,11 @@ struct Current: Codable {
     }
 }
 
-// MARK: - Weather
+// MARK: - Weather_Detailed
 struct Weather_Detailed: Codable {
     let id: Int?
-    //let main: Main_Detailed
     let main: String?
-    //let weatherDescription: Description
     let weatherDescription: String?
-    //let icon: Icon
     let icon: String?
 
     enum CodingKeys: String, CodingKey {
@@ -63,31 +60,6 @@ struct Weather_Detailed: Codable {
         case icon = "icon"
     }
 }
-
-//enum Icon: String, Codable {
-//    case the03D = "03d"
-//    case the04D = "04d"
-//    case the04N = "04n"
-//    case the10D = "10d"
-//    case the10N = "10n"
-//    case the50D = "50d"
-//}
-
-//enum Main_Detailed: String, Codable {
-//    case clouds = "Clouds"
-//    case haze = "Haze"
-//    case rain = "Rain"
-//}
-//
-//enum Description: String, Codable {
-//    case brokenClouds = "broken clouds"
-//    case haze = "haze"
-//    case heavyIntensityRain = "heavy intensity rain"
-//    case lightRain = "light rain"
-//    case moderateRain = "moderate rain"
-//    case overcastClouds = "overcast clouds"
-//    case scatteredClouds = "scattered clouds"
-//}
 
 // MARK: - Daily
 struct Daily: Codable {

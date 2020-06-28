@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 extension CityDetailsVC: UITableViewDataSource, UITableViewDelegate {
+    
+    //MARK:- Delegate Methods to show the Weekly and other specific data for the City.
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -17,7 +19,6 @@ extension CityDetailsVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(section == 0) {
             if(weatherDataDetailedCollection.count>0 && section == 0) {
-                print(weatherDataDetailedCollection[0]!.daily.count)
                 return weatherDataDetailedCollection[0]!.daily.count
             } else {
                 return 0

@@ -1,16 +1,14 @@
-////
-////  getWeatherOfThePlaceResponse.swift
-////  Outside
-////
-////  Created by Agnidhra Gangopadhyay on 6/18/20.
-////  Copyright © 2020 Agnidhra Gangopadhyay. All rights reserved.
-////
 //
-import Foundation
+//  getWeatherOfThePlaceResponse.swift
+//  Outside
+//
+//  Created by Agnidhra Gangopadhyay on 6/18/20.
+//  Copyright © 2020 Agnidhra Gangopadhyay. All rights reserved.
+//
 
 import Foundation
 
-// MARK: - Welcome
+// MARK: - WeatherData
 struct WeatherData: Codable {
     let coord: Coord?
     let weather: [Weather?]

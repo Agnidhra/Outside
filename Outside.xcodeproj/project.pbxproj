@@ -126,9 +126,9 @@
 			isa = PBXGroup;
 			children = (
 				61000C5D249C691600C64711 /* getWeatherOfThePlaceResponse.swift */,
+				616433F2249E01E600171D67 /* getWeatherOfThePlaceResponseDetailed.swift */,
 				61000C5F249C696200C64711 /* BaseAPI.swift */,
 				61000C61249C69DD00C64711 /* APIUtility.swift */,
-				616433F2249E01E600171D67 /* getWeatherOfThePlaceResponseDetailed.swift */,
 				553EE7D7249E16EA00D5261A /* APIConstants.swift */,
 			);
 			path = API;

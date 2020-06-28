@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 struct APIConstants {
     static let baseEndpoint = "api.openweathermap.org"
     static let shortDataPath = "/data/2.5/weather"

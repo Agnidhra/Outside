@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 extension UIViewController {
+    
+    //MARK:- Reusable Alert method from Any View Controller
     func showAlert(withTitle: String = "Information", message: String, action: (() -> Void)? = nil) {
         updateUIOnMainThread {
             let alert = UIAlertController(title: withTitle, message: message, preferredStyle: .alert)
@@ -24,6 +26,8 @@ extension UIViewController {
             updateTheUI()
         }
     }
+    
+    //MARK:- Code to Fetch the appropriate background Image depending on the weateher
     func getImage(weather: String?) -> UIImage? {
         switch weather {
             case "Clear":
@@ -52,6 +56,7 @@ extension UIViewController {
         }
     }
     
+    //MARK:- Code to save Current DB instance
     func saveCurrentContext() {
         do {
             try CoreDataStackMethods.getSharedInstance().saveCurrentContext()
@@ -63,6 +68,7 @@ extension UIViewController {
 
 extension String {
 
+    //MARK:- String Utility for format Api Reponse for UI Display
     func strstr(needle: String, beforeNeedle: Bool = false) -> String? {
         guard let range = self.range(of: needle) else { return nil }
 

@@ -10,14 +10,13 @@ import Foundation
 import UIKit
 
 extension CityDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    //MARK:- Collection View Delegate Methods for the Hourly Daya
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //Show Value of Next 24 Hours
         return 24
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyWeatherCollectionViewCell.identifier, for: indexPath) as! HourlyWeatherCollectionViewCell
         if weatherDataDetailedCollection.count > 0 {
             let hourly: Hourly = (weatherDataDetailedCollection[0]?.hourly[indexPath.row])!

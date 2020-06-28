@@ -10,21 +10,20 @@ import UIKit
 import CoreLocation
 class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var cities: UITableView!
+    //MARK:- Properties
     var isCoordinateUpdated:Bool = false
-    var isCelsius: Bool? = true
-    @IBOutlet weak var customBackground: UIImageView!
-    
-    
-    
-    let locationManager = CLLocationManager()
-
     var weatherData: [WeatherData?] = []
+    let locationManager = CLLocationManager()
+    
+    //MARK:- Outlets
+    @IBOutlet weak var cities: UITableView!
+    @IBOutlet weak var customBackground: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        isCelsius = UserDefaults.standard.bool(forKey: "isCelsius")
-        print("AfterLoadData",weatherData.count)
+        
+        //Ask User for Authorization for Location Permission
         if locationManager.location == nil && !isCoordinateUpdated && weatherData.count == 0 {
             // Ask for Authorisation from the User.
             self.locationManager.requestAlwaysAuthorization()
@@ -33,12 +32,15 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
             self.locationManager.requestWhenInUseAuthorization()
             
         }
+        
+        //Code to get coordinates if the permision is given.
         if CLLocationManager.locationServicesEnabled() && weatherData.count == 0 {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
         
+        //Code to update UI Data based on the location permission and cooordinate dataData
         if locationManager.location != nil && !isCoordinateUpdated && weatherData.count == 0 &&  !checkIfDataIsAlreadySaved(((locationManager.location?.coordinate.latitude)!*100).rounded()/100, ((locationManager.location?.coordinate.longitude)!*100).rounded()/100){
             
             if !isCoordinateUpdated {
@@ -50,57 +52,30 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
         } else {
             loadData()
         }
-        
-        
-        print("getAllPinDetails()!.count", getAllPinDetails()!.count)
-        for Coordinates in 0..<getAllPinDetails()!.count {
-            print("***************************************")
-            print(getAllPinDetails()![Coordinates].latitude)
-            print(getAllPinDetails()![Coordinates].longitude)
-            print("***************************************")
-        }
-        for weather in weatherData {
-            print(weather?.coord?.lat, weather?.coord?.lon)
-        }
-        
-        
     }
 
+    //MARK:- Method to monitor location in background if not available at the time of launcha and once available to show weather data based on coordinated.
     internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if(!self.isCoordinateUpdated) && !isCoordinateUpdated {
+        if !self.isCoordinateUpdated{
             guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else {
                 return }
-            print("locations = \(locValue.latitude) \(locValue.longitude)")
             isCoordinateUpdated = true
-            if weatherData.count == 0 && !checkIfDataIsAlreadySaved(((locationManager.location?.coordinate.latitude)!*100).rounded()/100,
-                    ((locationManager.location?.coordinate.longitude)!*100).rounded()/100){
-                checkAndSaveData(latitude: ((locationManager.location?.coordinate.latitude)!*100).rounded()/100,
-                longitude: ((locationManager.location?.coordinate.longitude)!*100).rounded()/100)
+            if weatherData.count == 0 && !checkIfDataIsAlreadySaved(((locValue.latitude)*100).rounded()/100, ((locValue.longitude)*100).rounded()/100){
+                checkAndSaveData(latitude: ((locValue.latitude)*100).rounded()/100, longitude: ((locValue.longitude)*100).rounded()/100)
                 loadData()
             }
         }
     }
     
+    //MARK:- Code to Get Current Local Time based on GMT offset from API
     func getTime(timeZone: Int?) -> String{
         let f = ISO8601DateFormatter()
         f.formatOptions = .withFullTime
         f.timeZone = TimeZone(secondsFromGMT: timeZone!)
-        
-      return f.string(from: Date())
+        return f.string(from: Date())
     }
    
-    
-    
-    
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        if(indexPath.section == 0 ){
-            return UITableViewCell.EditingStyle.delete
-        } else {
-            return UITableViewCell.EditingStyle.none
-        }
-    }
-    
-    
+    //MARK:- Method to Add City from Map to Show Weather Detalils
     @IBAction func addCity(_ sender: Any) {
         let vc:MapSelectionViewController
         if #available(iOS 13.0, *) {
@@ -109,72 +84,69 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
            vc = storyboard?.instantiateViewController(withIdentifier: "MapSelectionViewController") as! MapSelectionViewController
         }
         vc.weatherDataCollection = self.weatherData
-        vc.isCelsius = self.isCelsius
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
     
+    //MARK:- Method to Set Unit for Temperature Celsius / Farenhite Using property and UserDefaults.
     @IBAction func setUnit(_ sender: UIButton) {
         print("setUnit", sender.tag)
         switch sender.tag {
             case 11:
-                if !isCelsius! {
+                if !UserDefaults.standard.bool(forKey: "isCelsius") {
                     UserDefaults.standard.set(true, forKey: "isCelsius")
-                    isCelsius = true
                     updateData()
                     self.cities.reloadData()
                 }
             case 12:
-                if isCelsius! {
+                if UserDefaults.standard.bool(forKey: "isCelsius") {
                     UserDefaults.standard.set(false, forKey: "isCelsius")
-                    isCelsius = false
                     updateData()
                     self.cities.reloadData()
                 }
             default:
-//                isCelsius = true
-//                self.cities.reloadData()
-            return
-
+                return
         }
-        
     }
     
+    //MARK:- Method to Reload Data in case of changes in Selection from User.
     func loadData() {
-        print(weatherData.count)
         self.weatherData.removeAll()
-        print(weatherData.count)
         for Coordinates in 0..<getAllPinDetails()!.count {
+            activityIndicator.isHidden = false
+            activityIndicator.startAnimating()
             BaseAPI.sharedInstance().getWeatherData(latitude: getAllPinDetails()![Coordinates].latitude,
                     longitude: getAllPinDetails()![Coordinates].longitude,
-                    unit: isCelsius! ? "metric" : "imperial") { (weatherData, error) in
+                    unit: UserDefaults.standard.bool(forKey: "isCelsius") ? "metric" : "imperial") { (weatherData, error) in
                 if let weatherData = weatherData {
                     print(weatherData.timezone as Any)
                     self.weatherData.append(weatherData)
                     DispatchQueue.main.async {
                         self.cities.reloadData()
-                    }
-
+                        self.activityIndicator.stopAnimating()
+                        self.activityIndicator.isHidden = true                    }
                 } else {
                     print(error.debugDescription)
                 }
             }
        }
-    
     }
     
+    //MARK:- Method to Update Data in case of changes in Unit for Temperature - Celsius / Farenhite
     func updateData() {
-        print("updateData", isCelsius)
         if (weatherData.count > 0) {
             for index in 0..<weatherData.count {
-            //for weather in weatherData {
+                activityIndicator.isHidden = false
+                activityIndicator.startAnimating()
                 BaseAPI.sharedInstance().getWeatherData(latitude: weatherData[index]!.coord!.lat!,
                         longitude: weatherData[index]!.coord!.lon!,
-                        unit: self.isCelsius! ? "metric" : "imperial") { (weatherData, error) in
+                        unit: UserDefaults.standard.bool(forKey: "isCelsius") ? "metric" : "imperial") { (weatherData, error) in
                     if let weatherData = weatherData {
                         self.weatherData[index] = weatherData
                         DispatchQueue.main.async {
                             self.cities.reloadData()
+                            self.activityIndicator.stopAnimating()
+                            self.activityIndicator.isHidden = true
                         }
                     } else {
                         print(error.debugDescription)
@@ -182,22 +154,17 @@ class HomeVC: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, 
                 }
             }
         }
-        
     }
     
+    //MARK:- Method to Get All the Selection from Data Base
     public func getAllPinDetails() -> [SavedCoordinates]? {
         var pinDetails: [SavedCoordinates]?
         do {
-            try pinDetails = CoreDataStackMethods.getSharedInstance().getAllCoordinates(entityName: SavedCoordinates.tableName) //CoreDataStackDetails.getSharedInstance().getAllPinDetails(entityName: PinDetails.tableName)
+            try pinDetails = CoreDataStackMethods.getSharedInstance().getAllCoordinates(entityName: SavedCoordinates.tableName)
         } catch {
             showAlert(withTitle: "Error", message: "Error While Getting All The Pin coordinates: \(error)")
-            
         }
         return pinDetails
     }
-    
-    
-   
-    
 }
 

@@ -41,7 +41,7 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                     <state key="normal">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="setUnit:" destination="lOf-hI-cbA" eventType="touchUpInside" id="T2W-pz-TVR"/>
@@ -64,7 +64,7 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                     <state key="normal">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="setUnit:" destination="lOf-hI-cbA" eventType="touchUpInside" id="UrK-hj-e1F"/>
@@ -77,7 +77,7 @@
                                                         <constraint firstAttribute="height" constant="50" id="Yeb-hD-yqi"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="40"/>
-                                                    <state key="normal">
+                                                    <state key="normal" title="+">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
@@ -163,6 +163,10 @@
                                     <outlet property="delegate" destination="lOf-hI-cbA" id="rGk-rz-Gn5"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="6Tf-7h-9Ch">
+                                <rect key="frame" x="188.5" y="434.5" width="37" height="37"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -170,14 +174,17 @@
                             <constraint firstItem="yCv-bu-x8u" firstAttribute="leading" secondItem="gnm-b6-896" secondAttribute="leading" id="B11-60-8ju"/>
                             <constraint firstItem="4Q7-k6-XhD" firstAttribute="top" secondItem="X64-Vn-lWx" secondAttribute="top" id="Bkg-xu-Gwy"/>
                             <constraint firstAttribute="bottom" secondItem="yCv-bu-x8u" secondAttribute="bottom" id="HPQ-Zk-2pY"/>
+                            <constraint firstItem="6Tf-7h-9Ch" firstAttribute="centerX" secondItem="gnm-b6-896" secondAttribute="centerX" id="R3j-2U-OlK"/>
                             <constraint firstItem="yCv-bu-x8u" firstAttribute="top" secondItem="X64-Vn-lWx" secondAttribute="top" id="UxT-5V-qNW"/>
                             <constraint firstItem="4Q7-k6-XhD" firstAttribute="leading" secondItem="gnm-b6-896" secondAttribute="leading" id="cEi-yS-Dfg"/>
+                            <constraint firstItem="6Tf-7h-9Ch" firstAttribute="centerY" secondItem="gnm-b6-896" secondAttribute="centerY" id="mJh-c8-tLT"/>
                             <constraint firstItem="gnm-b6-896" firstAttribute="trailing" secondItem="4Q7-k6-XhD" secondAttribute="trailing" id="pgV-rE-nQK"/>
                             <constraint firstItem="4Q7-k6-XhD" firstAttribute="centerY" secondItem="X64-Vn-lWx" secondAttribute="centerY" id="pw7-PI-Itr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gnm-b6-896"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="6Tf-7h-9Ch" id="GBF-gO-HEv"/>
                         <outlet property="cities" destination="4Q7-k6-XhD" id="HRk-W7-Ls5"/>
                         <outlet property="customBackground" destination="yCv-bu-x8u" id="ZgO-Pe-TAS"/>
                     </connections>
@@ -200,14 +207,15 @@
                                     <outletCollection property="gestureRecognizers" destination="Z7n-GU-he7" appends="YES" id="hSU-aq-WAt"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L9l-mX-s3q">
-                                <rect key="frame" x="320" y="44" width="70" height="30"/>
+                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L9l-mX-s3q">
+                                <rect key="frame" x="320" y="44" width="70" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="dfb-AL-Jxp"/>
-                                    <constraint firstAttribute="height" constant="30" id="kbW-3T-Xs6"/>
+                                    <constraint firstAttribute="height" constant="70" id="kbW-3T-Xs6"/>
                                 </constraints>
-                                <state key="normal" title="Done">
+                                <state key="normal">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="18" scale="large" weight="bold"/>
                                 </state>
                                 <connections>
                                     <action selector="selectedDone:" destination="Tdn-oI-wNM" eventType="touchUpInside" id="2WE-nQ-nuQ"/>

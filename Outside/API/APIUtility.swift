@@ -9,6 +9,8 @@
 import Foundation
 
 extension BaseAPI {
+    
+    //MARK:- Reusable Method to get response from GET call to API
     func getCall( _ function : String? = nil, _ url : URL? = nil, path: String? = nil,parameters : [String: String],
          completionHandlerForGET: @escaping (_ result: Data?, _ error: NSError?) -> Void) -> URLSessionDataTask {
 
@@ -43,12 +45,12 @@ extension BaseAPI {
              }
 
              completionHandlerForGET(data, nil)
-
          }
          task.resume()
          return task
      }
-     
+    
+    //MARK:- Method to build the URL based on Parameters
     public func buildURL(_ host: String, _ path:String ,_ apiParameters: [String: String], withPathExtension: String? = nil) -> URL {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -60,7 +62,6 @@ extension BaseAPI {
             let queryItem = URLQueryItem(name: key, value: value)
             urlComponents.queryItems!.append(queryItem)
         }
-        print(urlComponents.url!.absoluteString)
         return urlComponents.url!
     }
 }
