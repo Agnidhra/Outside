@@ -158,47 +158,4 @@ class CityDetailsVC: UIViewController {
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
-    
-    
-    
-    
-    
-    
-    
-    //var zeroHeightConstraint: NSLayoutConstraint?
-    
-    //MARK:- Scroll Method WIP
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        //Code to be written to hide section on scrolling
-//        if (scrollView == weekDayTemperatureTable) {
-//            let scrollViewContentHeight = scrollView.contentSize.height
-//            let scrollViewHeight = scrollView.frame.height
-//            if scrollView.contentOffset.y < (scrollViewContentHeight - scrollViewHeight){
-//                //Custom view show
-//                var newFrame : CGRect = hourlyWeatherData.frame
-//                  newFrame.size.height = 100
-//
-//                  UIView.animate(withDuration: 0.25, animations:{
-//                    self.hourlyWeatherData.frame = newFrame;
-//                    self.hourlyWeatherData.isHidden = false
-//                  },completion : nil)
-//                hourlyWeatherDataView.frame = CGRect(x: hourlyWeatherDataView.frame.maxX, y: hourlyWeatherDataView.frame.maxY, width: hourlyWeatherDataView.frame.width, height: 100)
-//                
-//            }else{
-//                var newFrame : CGRect = hourlyWeatherData.frame
-//                newFrame.size.height = 0
-//                
-//                UIView.animate(withDuration: 0.25, animations:{
-//                    self.hourlyWeatherData.frame = newFrame;
-//                    self.hourlyWeatherData.isHidden = true
-//                },completion : nil)
-//                hourlyWeatherDataView.frame = CGRect(x: hourlyWeatherDataView.frame.maxX, y: hourlyWeatherDataView.frame.maxY, width: hourlyWeatherDataView.frame.width, height: 0)
-//
-//                weekDayTemperatureTable.readableContentGuide
-//                //hourlyWeatherDataView.reloadInputViews()
-//                
-//            }
-//        }
-//    }
-    
 }

@@ -82,25 +82,13 @@ class MapSelectionViewController: UIViewController, MKMapViewDelegate {
         
     //MARK:- MapView Delegate Methods
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
         let reuseId = "pin"
-        
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
-        
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = true
-            if #available(iOS 13.0, *) {
-                pinView!.pinTintColor = .systemFill
-            } else {
-                pinView!.pinTintColor = .red
-            }
-            pinView!.animatesDrop = true
-            pinView!.isDraggable = true
-        } else {
-            pinView!.annotation = annotation
-        }
-        
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
+        pinView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+        pinView!.canShowCallout = true
+        pinView!.isDraggable = true
+        pinView!.image = UIImage(named: "mapIcon")
+       
         return pinView
     }
     
